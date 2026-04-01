@@ -15,139 +15,140 @@
             --rose: #f43f5e;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
         body {
             background-color: var(--indigo-deep);
             color: #f0f2f5;
             font-family: 'Montserrat', sans-serif;
             margin: 0; padding: 0; overflow: hidden;
-            width: 100vw; height: 100vh;
-            display: flex; align-items: center; justify-content: center;
+            height: 100vh; display: flex; align-items: center; justify-content: center;
         }
 
-        /* 噴砂背景紋理 */
+        /* 噴砂質感背景 */
         body::before {
             content: ""; position: fixed; inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            opacity: 0.04; pointer-events: none; z-index: 100;
+            opacity: 0.04; pointer-events: none; z-index: 99;
         }
 
         .font-serif { font-family: 'Cormorant Garamond', serif; }
         .font-cursive { font-family: 'Parisienne', cursive; }
 
         .app-shell {
-            width: 90%; max-width: 400px;
-            height: 85vh; height: 85dvh;
-            background: rgba(255, 255, 255, 0.02);
+            width: 92%; max-width: 400px; height: 88vh; max-height: 780px;
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(226, 209, 195, 0.2);
-            border-radius: 3rem; backdrop-filter: blur(30px);
+            border-radius: 3.5rem; backdrop-filter: blur(30px);
             display: flex; flex-direction: column; position: relative;
-            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.8); overflow: hidden;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.8); overflow: hidden;
         }
 
-        .screen { display: none; flex-direction: column; height: 100%; padding: 2rem; width: 100%; }
+        .screen { display: none; flex-direction: column; height: 100%; padding: 2.2rem; }
         .screen.active { display: flex; animation: fadeIn 0.8s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .btn-luxury {
             background: transparent; border: 1px solid rgba(251, 191, 36, 0.4);
             color: var(--sun-gold); padding: 1.2rem; border-radius: 2.5rem;
-            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5em;
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5em;
             text-transform: uppercase; cursor: pointer; transition: all 0.3s ease;
         }
         .btn-luxury:active { background: rgba(251, 191, 36, 0.1); transform: scale(0.97); }
 
         .btn-choice {
             background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1.2rem; border-radius: 1.5rem; text-align: left;
-            margin-bottom: 0.8rem; width: 100%; cursor: pointer; transition: all 0.3s;
+            padding: 1.4rem; border-radius: 1.8rem; text-align: left;
+            margin-bottom: 1rem; width: 100%; cursor: pointer; transition: all 0.3s;
         }
         .btn-choice:active { border-color: var(--sun-gold); background: rgba(255,255,255,0.08); transform: translateX(5px); }
 
-        /* 天秤元件視覺 */
-        #beam-group { transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .orb-viz { transition: transform 1s ease-in-out, opacity 0.8s; }
-        .glow-moon { filter: drop-shadow(0 0 12px var(--moon-blue)); }
-        .glow-sun { filter: drop-shadow(0 0 12px var(--sun-gold)); }
+        #beam-group { transition: transform 1.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .orb-group { transition: transform 1.2s ease, opacity 0.5s; }
+        .sun-glow { filter: drop-shadow(0 0 15px var(--sun-gold)); }
+        .moon-glow { filter: drop-shadow(0 0 15px var(--moon-blue)); }
 
-        .scroll-content { overflow-y: auto; flex-grow: 1; padding-right: 4px; display: flex; flex-direction: column; }
+        /* 進度條 */
+        .progress-track { height: 2px; width: 100%; background: rgba(255,255,255,0.05); border-radius: 2px; margin-bottom: 2rem; }
+        .progress-fill { height: 100%; background: var(--champagne-gold); transition: width 1s ease; border-radius: 2px; }
+
+        .scroll-content { overflow-y: auto; flex-grow: 1; padding-right: 4px; }
         .scroll-content::-webkit-scrollbar { width: 0px; }
-
-        .progress-track { height: 2px; width: 100%; background: rgba(255,255,255,0.05); border-radius: 2px; margin-bottom: 1.5rem; }
-        .progress-fill { height: 100%; background: var(--champagne-gold); transition: width 0.8s ease; }
     </style>
 </head>
 <body>
 
 <div class="app-shell">
     
-    <!-- START SCREEN -->
+    <!-- 開始畫面 -->
     <div id="screen-start" class="screen active justify-center items-center text-center">
-        <h2 class="text-[8px] tracking-[1em] text-white/20 uppercase font-bold mb-8">Management Equilibrium</h2>
+        <h2 class="text-[8px] tracking-[1em] text-white/20 uppercase font-bold mb-8">Celestial Equilibrium</h2>
         <h1 class="text-4xl font-cursive text-[#E2D1C3] mb-12 tracking-widest">The Restaurateur</h1>
         <p class="font-serif italic text-xl text-[#E2D1C3]/60 mb-20 leading-relaxed px-4">
-            「左擁如月平權，右抱如日利潤。<br>主理人，請啟動天秤。」
+            「平權如月，利潤如日。<br>主理人，請守護這份平衡。」
         </p>
-        <button onclick="handleStart()" class="btn-luxury w-full">啟動模擬</button>
+        <button onclick="handleStart()" class="btn-luxury w-full">啟動經營模擬</button>
     </div>
 
-    <!-- PLAY SCREEN -->
+    <!-- 遊戲畫面 -->
     <div id="screen-play" class="screen">
-        <!-- 核心視覺：天秤 -->
-        <div class="w-full flex flex-col items-center justify-center border-b border-white/5 mb-6 pb-4">
-            <svg width="260" height="120" viewBox="0 0 300 150">
+        <!-- 視覺天秤區 -->
+        <div class="w-full flex flex-col items-center justify-center border-b border-white/5 mb-8 pb-4">
+            <svg width="280" height="140" viewBox="0 0 300 150">
                 <defs>
-                    <linearGradient id="balanceGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="var(--moon-blue)" />
-                        <stop offset="50%" stop-color="var(--champagne-gold)" stop-opacity="0.3" />
-                        <stop offset="100%" stop-color="var(--sun-gold)" />
+                    <linearGradient id="scaleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="var(--moon-blue)" stop-opacity="0.8" />
+                        <stop offset="50%" stop-color="var(--champagne-gold)" stop-opacity="0.5" />
+                        <stop offset="100%" stop-color="var(--sun-gold)" stop-opacity="0.8" />
                     </linearGradient>
+                    <mask id="moonMask">
+                        <circle cx="0" cy="0" r="12" fill="white" />
+                        <circle cx="6" cy="-2" r="10" fill="black" />
+                    </mask>
                 </defs>
+                
                 <g id="beam-group" transform="translate(150, 75)">
-                    <line x1="-90" y1="0" x2="90" y2="0" stroke="url(#balanceGrad)" stroke-width="2" stroke-linecap="round" />
+                    <line x1="-100" y1="0" x2="100" y2="0" stroke="url(#scaleGrad)" stroke-width="2.5" stroke-linecap="round" />
                     
-                    <!-- 左月亮 (Equity) -->
-                    <g transform="translate(-90, 0)">
-                        <line x1="0" y1="0" x2="0" y2="25" stroke="#E2D1C3" stroke-width="0.5" opacity="0.2" />
-                        <g id="moon-orb" class="orb-viz" transform="translate(0, 35)">
-                            <!-- 使用穩定的單一路徑繪製月亮 -->
-                            <path d="M 5,-9 A 9,9 0 1,0 5,9 A 11,11 0 0,1 5,-9 Z" fill="var(--moon-blue)" class="glow-moon" />
+                    <!-- 左側：月亮 (Equity) -->
+                    <g transform="translate(-100, 0)">
+                        <line x1="0" y1="0" x2="0" y2="30" stroke="#E2D1C3" stroke-width="0.5" opacity="0.3" />
+                        <g id="moon-container" class="orb-group" transform="translate(0, 45)">
+                            <circle r="11" fill="var(--moon-blue)" mask="url(#moonMask)" class="moon-glow" />
+                            <circle r="14" stroke="var(--moon-blue)" stroke-width="0.2" stroke-dasharray="2 2" opacity="0.4" />
                         </g>
                     </g>
 
-                    <!-- 右太陽 (Profit) -->
-                    <g transform="translate(90, 0)">
-                        <line x1="0" y1="0" x2="0" y2="25" stroke="#E2D1C3" stroke-width="0.5" opacity="0.2" />
-                        <g id="sun-orb" class="orb-viz" transform="translate(0, 35)">
-                            <circle r="9" fill="var(--sun-gold)" class="glow-sun" />
-                            <circle r="13" stroke="var(--sun-gold)" stroke-width="0.2" stroke-dasharray="1 3" opacity="0.4" />
+                    <!-- 右側：太陽 (Profit) -->
+                    <g transform="translate(100, 0)">
+                        <line x1="0" y1="0" x2="0" y2="30" stroke="#E2D1C3" stroke-width="0.5" opacity="0.3" />
+                        <g id="sun-container" class="orb-group" transform="translate(0, 45)">
+                            <circle r="11" fill="var(--sun-gold)" class="sun-glow" />
+                            <circle r="15" stroke="var(--sun-gold)" stroke-width="0.2" stroke-dasharray="1 3" opacity="0.5" />
                         </g>
                     </g>
                 </g>
-                <circle cx="150" cy="75" r="4" fill="#0e101a" stroke="#E2D1C3" stroke-width="1.2" />
-                <path d="M150 75 L150 130" stroke="#E2D1C3" stroke-width="0.5" opacity="0.2" />
+                
+                <circle cx="150" cy="75" r="5" fill="#0e101a" stroke="#E2D1C3" stroke-width="1.5" />
+                <path d="M150 75 L150 135" stroke="#E2D1C3" stroke-width="0.5" opacity="0.2" />
             </svg>
-            <div class="flex gap-24 text-[7px] tracking-[0.4em] font-bold text-white/10 uppercase mt-2">
+            <div class="flex gap-28 text-[7px] tracking-[0.5em] font-bold text-white/10 uppercase mt-4">
                 <span>Equity</span><span>Profit</span>
             </div>
         </div>
 
-        <div class="scroll-content">
+        <div class="scroll-content flex flex-col">
             <div class="progress-track"><div id="ui-progress" class="progress-fill" style="width: 10%"></div></div>
-            <div class="flex justify-between items-center mb-4">
-                <span id="ui-case-tag" class="text-[9px] font-black text-amber-500 bg-amber-500/10 px-3 py-1 rounded-full uppercase">CASE</span>
-                <span id="ui-link" class="text-[8px] text-white/30 uppercase font-bold tracking-widest border border-white/5 px-3 py-1 rounded-full">CEDAW</span>
+            <div class="flex justify-between items-center mb-6">
+                <span id="ui-link" class="text-[8px] text-white/30 uppercase font-bold tracking-widest border border-white/5 px-3 py-1 rounded-full">CEDAW VISION</span>
             </div>
-            <h3 id="ui-title" class="text-xl font-serif text-[#E2D1C3] mb-4 leading-tight"></h3>
-            <p id="ui-desc" class="text-slate-400 text-sm italic mb-10 leading-relaxed border-l border-white/10 pl-4"></p>
-            <div id="ui-choices" class="mt-auto"></div>
+            <h3 id="ui-title" class="text-2xl font-serif text-[#E2D1C3] mb-5 leading-tight"></h3>
+            <p id="ui-desc" class="text-slate-400 text-base italic mb-10 leading-relaxed border-l border-white/5 pl-6"></p>
+            <div id="ui-choices"></div>
         </div>
     </div>
 
-    <!-- SUDDEN SCREEN -->
+    <!-- 突發事件 -->
     <div id="screen-sudden" class="screen justify-center items-center text-center">
-        <div class="w-16 h-16 rounded-full border border-rose/30 flex items-center justify-center mb-10 text-rose shadow-[0_0_30px_rgba(244,63,94,0.15)]">
+        <div class="w-16 h-16 rounded-full border border-rose/30 flex items-center justify-center mb-10 text-rose shadow-[0_0_30px_rgba(244,63,94,0.1)]">
             <span class="text-3xl font-serif">!</span>
         </div>
         <h3 id="ui-sudden-title" class="text-rose font-bold text-[10px] uppercase tracking-[0.5em] mb-6">命運的震盪</h3>
@@ -155,114 +156,111 @@
         <button onclick="handleSuddenClose()" class="btn-luxury w-full !text-rose !border-rose/30">承受變局</button>
     </div>
 
-    <!-- RESULT SCREEN -->
+    <!-- 結算畫面 -->
     <div id="screen-result" class="screen justify-center items-center text-center">
         <span class="text-[9px] tracking-[1em] text-white/20 uppercase font-bold mb-10">Final Analysis</span>
         <h2 id="ui-result-title" class="text-4xl font-serif italic mb-10 tracking-wide"></h2>
-        <div class="bg-white/[0.03] p-10 rounded-[3rem] border border-white/10 mb-16 w-full text-sm text-slate-400 leading-relaxed italic shadow-inner">
+        <div class="bg-white/[0.03] p-10 rounded-[3.5rem] border border-white/10 mb-16 w-full text-sm text-slate-400 leading-relaxed italic shadow-inner">
             <p id="ui-result-desc"></p>
         </div>
-        <button onclick="location.reload()" class="btn-luxury w-full">重啟經營循環</button>
+        <button onclick="location.reload()" class="btn-luxury w-full">再次啟動循環</button>
     </div>
 
 </div>
 
-<footer class="fixed bottom-4 text-[8px] tracking-[1.2em] text-white/10 uppercase font-bold text-center z-0 w-full">
+<footer class="fixed bottom-6 text-[8px] tracking-[1.2em] text-white/10 uppercase font-bold text-center z-0">
     Integrity • Leadership • Vision
 </footer>
 
 <script>
-    // --- 實裝全 50 題庫 ---
+    // --- 實裝全 50 題庫 (無重複，無數值) ---
     const DB = [
-        { t: "自動化重物搬運", d: "引進機械手臂輔助內場搬運，打破體力勞動的性別天花板與生理限制。", l: "CEDAW 第 5 條", a: { l: "投資輔助設施提升效能", p: 25, e: 15 }, b: { l: "維持人力現狀降低開支", p: 10, e: -15 } },
-        { t: "主管產後復職", d: "為產後回歸的主管提供彈性回歸與技能更新計畫，保障職涯續航力。", l: "CEDAW 第 11 條", a: { l: "執行留任保障與職務更新", p: 20, e: 20 }, b: { l: "視同新人重新考核", p: 5, e: -25 } },
-        { t: "情緒勞動定價", d: "認可外場服務人員在高壓下的心理專業價值，將薪資與技術職對齊。", l: "CEDAW 第 11 條", a: { l: "建立專業化敘薪體系", p: 30, e: 15 }, b: { l: "嚴格控制現有人事成本", p: 15, e: -12 } },
+        { t: "自動化重物搬運", d: "引進機械手臂輔助內場搬運，打破廚房體力勞動的性別天花板與生理限制。", l: "CEDAW 第 5 條", a: { l: "投資輔助設施提升效能", p: 25, e: 15 }, b: { l: "維持人力現狀降低開支", p: 10, e: -15 } },
+        { t: "主管產後復職", d: "為產後回歸的主管提供彈性回歸與技能更新計畫，保障其職涯續航力。", l: "CEDAW 第 11 條", a: { l: "執行留任保障與職務更新", p: 20, e: 20 }, b: { l: "視同一般新人重新考核", p: 5, e: -25 } },
+        { t: "情緒勞動定價", d: "認可外場服務人員在高壓下的心理專業價值，將其薪資與技術職對齊。", l: "CEDAW 第 11 條", a: { l: "建立專業化敘薪體系", p: 30, e: 15 }, b: { l: "嚴格控制現有人事成本", p: 15, e: -12 } },
         { t: "面對騷擾拒客", d: "面對大金主的不當言行，身為主理人，您決定站出來守護同仁尊嚴。", l: "職場安全防治", a: { l: "嚴正回絕並列入黑名單", p: 10, e: 35 }, b: { l: "息事寧人維護短期收益", p: 55, e: -35 } },
         { t: "移工晉升管理", d: "提供跨國人才領導力課程，拔擢優秀移工進入中高階管理層。", l: "CEDAW 第 11 條", a: { l: "啟動多元人才拔擢計畫", p: 40, e: 20 }, b: { l: "維持既有基層分工穩定", p: 15, e: -15 } },
-        { t: "性別中立美學", d: "推出無性別差異制服，塑造國際化高端精品餐廳形象。", l: "CEDAW 第 5 條", a: { l: "翻新形象吸引多元客群", p: 35, e: 15 }, b: { l: "沿用傳統分類服裝規範", p: 10, e: -10 } },
-        { t: "資深高齡聘用", d: "錄取具備三十年經驗的高齡女性主廚，其秘方成為餐廳的靈魂。", l: "消除招募歧視", a: { l: "錄取並開發核心產品線", p: 65, e: 20 }, b: { l: "以年輕化作為首要考量", p: 15, e: -10 } },
+        { t: "性別中立美學", d: "推出無性別差異化設計的制服，塑造國際化高端精品餐廳形象。", l: "CEDAW 第 5 條", a: { l: "翻新形象吸引多元客群", p: 35, e: 15 }, b: { l: "沿用傳統分類服裝規範", p: 10, e: -10 } },
+        { t: "資深高齡聘用", d: "錄取具備三十年經驗的高齡女性主廚，其秘方成為餐廳的靈魂特色。", l: "消除招募歧視", a: { l: "錄取並開發核心產品線", p: 65, e: 20 }, b: { l: "以品牌年輕化為優先考量", p: 15, e: -10 } },
         { t: "旗艦哺乳空間", d: "將部分席位改造成頂級友善哺乳空間，吸引高消費力的母嬰客群。", l: "CEDAW 第 11 條", a: { l: "改裝質感空間提升價值", p: 40, e: 25 }, b: { l: "追求極致翻桌率維持原狀", p: 25, e: -20 } },
         { t: "深夜安全通勤", d: "為所有夜歸同仁提供特約接送，確保職場環境的絕對安全韌性。", l: "職場安全責任", a: { l: "簽約保障排班靈活安全", p: 30, e: 15 }, b: { l: "由員工自行規劃交通", p: 15, e: -10 } },
         { t: "薪資透明校正", d: "主動稽核並校正隱形的性別薪資缺口，建立品牌公正信譽。", l: "CEDAW 第 11 條", a: { l: "主動補齊落實平等價值", p: 15, e: 35 }, b: { l: "逐年微調預算確保現流", p: 35, e: -15 } },
-        { t: "生理假給假優化", d: "提供全薪生理假並建立互助排班，營造體貼職場環境。", l: "CEDAW 第 4 條", a: { l: "建立優於法規的假別政策", p: 18, e: 25 }, b: { l: "嚴格執行傳統出勤考核", p: 22, e: -20 } },
-        { t: "穆斯林文化認證", d: "通過清真認證並允許佩戴特製頭巾，擴展全球客源市場。", l: "文化包容實踐", a: { l: "推動多元文化認證計畫", p: 45, e: 20 }, b: { l: "維持傳統單一品牌風貌", p: 15, e: -10 } },
-        { t: "育兒遠端行政", d: "後勤人員可因托育需求申請在家辦公，建立彈性支援體系。", l: "CEDAW 第 11 條", a: { l: "建立遠端管理溝通機制", p: 32, e: 18 }, b: { l: "要求全員現場以利控時", p: 20, e: -12 } },
-        { t: "男主管產假倡議", d: "鼓勵男性主廚休滿陪產檢假與育嬰假，翻轉職場性別分工。", l: "打破性別偏見", a: { l: "主理人帶頭推行家庭價值", p: 12, e: 30 }, b: { l: "不干涉員工個人私領域", p: 15, e: -10 } },
-        { t: "盲選面試技術", d: "導入去性別姓名盲選系統，確保人才選拔的公正純度。", l: "消除招募偏見", a: { l: "實施盲選技術激發創新", p: 38, e: 22 }, b: { l: "沿用傳統履歷面談模式", p: 15, e: -8 } },
-        { t: "全齡成長路徑", d: "為不同年齡層員工設計客製化目標，留住核心技術人才。", l: "人才永續經營", a: { l: "多元職涯發展規劃", p: 35, e: 20 }, b: { l: "執行單一績效汰弱留強", p: 45, e: -25 } },
-        { t: "技術輪調公平", d: "打破傳統男女分工，實施全員核心技術輪訓。", l: "CEDAW 第 10 條", a: { l: "強制輪調開發全員戰力", p: 28, e: 25 }, b: { l: "依循過往分工習慣穩定", p: 18, e: -12 } },
-        { t: "身障無礙升級", d: "改造廚房高度並導入語音設備，錄用身障廚師。", l: "CEDAW 第 4 條", a: { l: "智慧化改造提升良率", p: 35, e: 30 }, b: { l: "維持現況省下投資經費", p: 15, e: -15 } },
-        { t: "職場導師補貼", d: "針對資深女同仁帶領學徒，發放額外的傳承導師津貼。", l: "培力教育計畫", a: { l: "投資導師制度穩定人才", p: 25, e: 20 }, b: { l: "讓新人自然磨合與競爭", p: 12, e: -5 } },
-        { t: "活動禮賓規定", d: "客戶要求指定女性員工擔任應酬招待，您決定拒絕物化。", l: "人權尊嚴守護", a: { l: "全面取消非專業需求招待", p: 15, e: 35 }, b: { l: "視為業務需要彈性配合", p: 40, e: -30 } },
-        { t: "品牌人權白皮書", d: "發布年度平權白皮書，爭取國際責任型資本注資。", l: "永續發展視野", a: { l: "發布報告獲取高端融資", p: 55, e: 30 }, b: { l: "保持商業隱私低調經營", p: 25, e: -10 } },
-        { t: "限定平衡晚宴", d: "開發特殊的「平權晚宴」菜單，部分營收資助公益。", l: "社會責任行銷", a: { l: "盛大發售創造品牌溢價", p: 65, e: 35 }, b: { l: "維持常規菜單節省支出", p: 25, e: 0 } },
-        { t: "多元接班人選拔", d: "打破血親與性別傳統，選擇最具平衡智慧接班人。", l: "永續領導傳承", a: { l: "啟動多元接班選拔機制", p: 40, e: 30 }, b: { l: "維持傳統嫡系接班制度", p: 30, e: -20 } },
-        { t: "移工教育津貼", d: "為外籍同仁提供語言與技能證照的全額補助。", l: "教育平等權利", a: { l: "資助進修厚植團隊實力", p: 32, e: 25 }, b: { l: "由員工自行負擔進修費", p: 10, e: -5 } },
-        { t: "隱形歧視查核", d: "聘請顧問工作坊處理團隊內部的隱形偏見與霸凌。", l: "職場心理安全", a: { l: "深度文化治理提升產能", p: 28, e: 35 }, b: { l: "發放手冊自行閱讀領悟", p: 12, e: -10 } },
-        { t: "多元家庭保險", d: "公司團保眷屬保障，擴及同性伴侶與事實婚姻。", l: "CEDAW 第 1 條", a: { l: "全面納入保障留住人才", p: 25, e: 35 }, b: { l: "僅限法規定義配偶適用", p: 10, e: -15 } },
-        { t: "外籍同仁長假", d: "支持外國同仁因文化節慶需求申請長假返鄉。", l: "文化平權保障", a: { l: "人力調配促成跨國返鄉", p: 15, e: 30 }, b: { l: "以人力吃緊為由婉拒", p: 35, e: -25 } },
-        { t: "育兒優先排班", d: "針對需要接送幼兒的基層同仁，優先排定穩定早班。", l: "友善托育支援", a: { l: "彈性排班機制提升效率", p: 28, e: 25 }, b: { l: "依職等決定排班權益", p: 20, e: -15 } },
-        { t: "性別比列委員會", d: "內部晉升委員會，強制女性代表須達半數以上。", l: "參與權與決策權", a: { l: "落實多元決策降低風險", p: 35, e: 30 }, b: { l: "依行政職決定成員組成", p: 15, e: -12 } },
-        { t: "月經貧窮支持", d: "盥洗室提供高品質且免費的女性生理用品。", l: "實質平等需求", a: { l: "編列年度預算長期供應", p: 25, e: 30 }, b: { l: "設置投幣式自動販賣機", p: 10, e: -5 } },
-        { t: "聽障服務系統", d: "導入圖形化點餐系統，聘用聽障服務員。", l: "CEDAW 第 4 條", a: { l: "系統升級開拓多元客源", p: 35, e: 25 }, b: { l: "維持口頭點餐降低成本", p: 15, e: -15 } },
-        { t: "高溫環境改善", d: "優化廚房降溫設備，降低生理期工作耗損。", l: "勞動環境平權", a: { l: "投資環境改善提升良率", p: 30, e: 20 }, b: { l: "廚房本就艱苦忍耐優先", p: 15, e: -12 } },
-        { t: "招募廣告用語", d: "修正徵才廣告中暗示年齡、性別或家庭狀態字眼。", l: "CEDAW 第 5 條", a: { l: "重塑專業導向品牌形象", p: 25, e: 20 }, b: { l: "沿用舊有風格追求點擊", p: 15, e: -15 } },
-        { t: "帶薪產檢假", d: "提供優於法律的全薪產檢假，支持雙親共職。", l: "CEDAW 第 11 條", a: { l: "建立友善家庭福利標竿", p: 18, e: 30 }, b: { l: "按法律最低標半薪給付", p: 25, e: -15 } },
-        { t: "尾牙互動規定", d: "明確規定表演不得包含物化女性或強迫社交。", l: "職場倫理與安全", a: { l: "建立尊重彼此的宴會觀", p: 15, e: 25 }, b: { l: "熱鬧才是尾牙不再限制", p: 20, e: -25 } },
-        { t: "供應商誠信約章", d: "要求供應商簽署不壓榨、保障性平條約。", l: "社會責任連鎖", a: { l: "嚴選鏈結爭取高端訂單", p: 40, e: 35 }, b: { l: "價格最優不看附加條款", p: 50, e: -25 } },
-        { t: "技能證照補貼", d: "全額補助考取不分性別領域的專業餐飲執照。", l: "教育權利平等", a: { l: "厚植專業實力建立溢價", p: 35, e: 20 }, b: { l: "員工個人成長自理經費", p: 15, e: -5 } },
-        { t: "匿名騷擾信箱", d: "建立外部律師介入的匿名性騷擾處理系統。", l: "救濟與保障制度", a: { l: "深度治理降低營運風險", p: 20, e: 35 }, b: { l: "內部協調處理節省律費", p: 25, e: -20 } },
-        { t: "心理諮商保險", d: "將心理諮商納入保險，應對情緒勞動壓力。", l: "職場心理健康", a: { l: "穩定團隊降低離職風險", p: 25, e: 20 }, b: { l: "非公司核心業務預算", p: 15, e: 0 } },
-        { t: "全場語音引導", d: "為高齡員工導入語音指令導引系統。", l: "CEDAW 第 4 條", a: { l: "技術升級邁向通用設計", p: 30, e: 25 }, b: { l: "維持手動操作降低費用", p: 15, e: -10 } },
-        { t: "職務垂直輪動", d: "鼓勵行政參與內場實作，內場參與管理培訓。", l: "消除職務隔離", a: { l: "打破隔閡激發營運創意", p: 35, e: 25 }, b: { l: "各安其位確保分工精密", p: 20, e: -10 } },
-        { t: "高齡接班教練", d: "聘請屆退員工擔任顧問教練，延長職涯。", l: "人才續航計畫", a: { l: "經驗傳承降低管理失誤", p: 40, e: 20 }, b: { l: "屆齡即退確保人員換血", p: 25, e: -15 } },
-        { t: "外籍員工連假", d: "支持外國同仁一次性申請較長假期返鄉。", l: "文化平等保障", a: { l: "包容文化建立終身忠誠", p: 20, e: 35 }, b: { l: "以人力吃緊為由婉拒", p: 35, e: -20 } },
-        { t: "產後適應減時", d: "允許產後同仁申請減時不減薪過渡排班。", l: "CEDAW 第 11 條", a: { l: "留住核心人才避免斷層", p: 22, e: 35 }, b: { l: "按工時計費節省預算", p: 30, e: -25 } },
-        { t: "品牌形象廣告", d: "選取專業多樣化員工樣貌，而非外聘模特。", l: "消除刻板印象", a: { l: "建立具備溫度的品牌力", p: 30, e: 25 }, b: { l: "選取大眾偏好美型宣傳", p: 40, e: -15 } },
-        { t: "薪資公正稽核", d: "聘請會計師事務所針對性別薪資進行稽核。", l: "第 11 條同工同酬", a: { l: "獲取投資人與社會信賴", p: 45, e: 30 }, b: { l: "自行調整省下外部費用", p: 20, e: -10 } },
-        { t: "多元信仰空間", d: "員工休息區劃設靜心祈禱角，包容信仰。", l: "文化權利共融", a: { l: "提升少數群體向心力", p: 15, e: 25 }, b: { l: "空間有限以用餐為主", p: 10, e: -10 } },
-        { t: "數位管理紅利", d: "導入全數位排班系統，降低人力衝突成本。", l: "管理效能優化", a: { l: "技術獲利反饋員工福利", p: 50, e: 15 }, b: { l: "數據監控極大化產能", p: 35, e: -20 } },
-        { t: "男性產假津貼", d: "額外給予休滿產假男性員工家庭基金獎勵。", l: "實質平等實踐", a: { l: "翻轉企業標籤吸引人才", p: 25, e: 35 }, b: { l: "依現有育嬰補助發放", p: 20, e: -10 } },
-        { t: "主理人未來宣言", d: "宣佈餐廳將以「共融」作為第一經營指標。", l: "品牌永續願景", a: { l: "發布宣言邁向精品之路", p: 55, e: 40 }, b: { l: "低調獲利維持穩健經營", p: 30, e: -10 } }
+        { t: "生理假給假優化", d: "提供全薪生理假，並建立互助排班機制，營造更體貼的職場環境。", l: "CEDAW 第 4 條", a: { l: "建立優於法規的假別政策", p: 18, e: 25 }, b: { l: "嚴格執行傳統出勤考核", p: 22, e: -20 } },
+        { t: "穆斯林文化認證", d: "通過清真認證並允許員工依宗教佩戴特製頭巾，擴展全球客源市場。", l: "文化包容實踐", a: { l: "推動多元文化認證計畫", p: 45, e: 20 }, b: { l: "維持傳統單一品牌風貌", p: 15, e: -10 } },
+        { t: "育兒遠端行政", d: "後勤人員可因家庭托育突發需求申請在家辦公，建立彈性支援體系。", l: "CEDAW 第 11 條", a: { l: "建立遠端管理溝通機制", p: 32, e: 18 }, b: { l: "要求全員現場以利控時", p: 20, e: -12 } },
+        { t: "男主管產假倡議", d: "鼓勵男性主廚休滿陪產檢假與育嬰假，翻轉職場性別分工刻板標籤。", l: "打破性別偏見", a: { l: "主理人帶頭推行家庭價值", p: 12, e: 30 }, b: { l: "不干涉員工個人私領域", p: 15, e: -10 } },
+        { t: "盲選面試技術", d: "導入去性別與去姓名的盲選履歷系統，確保人才選拔的公正純度。", l: "消除招募偏見", a: { l: "實施盲選技術激發創新", p: 38, e: 22 }, b: { l: "沿用傳統履歷面談模式", p: 15, e: -8 } },
+        { t: "全齡成長路徑", d: "為不同年齡層員工設計客製化成長目標與福利，留住核心技術人才。", l: "人才永續經營", a: { l: "多元職涯發展規劃", p: 35, e: 20 }, b: { l: "執行單一績效汰弱留強", p: 45, e: -25 } },
+        { t: "技術輪調公平", d: "打破女性擺盤、男性掌火的傳統分工，實施全員核心技術輪訓。", l: "CEDAW 第 10 條", a: { l: "強制輪調開發全員戰力", p: 28, e: 25 }, b: { l: "依循過往分工習慣穩定", p: 18, e: -12 } },
+        { t: "身障無礙升級", d: "改造廚房高度與導入語音輔助設備，錄用具備才華的身障廚師。", l: "CEDAW 第 4 條", a: { l: "智慧化改造提升良率", p: 35, e: 30 }, b: { l: "維持現況省下投資經費", p: 15, e: -15 } },
+        { t: "職場導師補貼", d: "針對資深女同仁帶領新進女學徒，發放額外的傳承導師津貼。", l: "培力教育計畫", a: { l: "投資導師制度穩定人才", p: 25, e: 20 }, b: { l: "讓新人自然磨合與競爭", p: 12, e: -5 } },
+        { t: "活動禮賓規定", d: "客戶要求指定女性員工擔任招待與陪酒，您決定拒絕此物化要求。", l: "人權尊嚴守護", a: { l: "全面取消非專業需求招待", p: 15, e: 35 }, b: { l: "視為業務需要彈性配合", p: 40, e: -30 } },
+        { t: "品牌人權白皮書", d: "主動發布年度平權與永續白皮書，爭取國際責任型資本的注資。", l: "永續發展視野", a: { l: "發布報告獲取高端融資", p: 55, e: 30 }, b: { l: "保持商業隱私低調經營", p: 25, e: -10 } },
+        { t: "限定平衡晚宴", d: "開發特殊的「平權晚宴」菜單，部分營收資助相關人權公益組織。", l: "社會責任行銷", a: { l: "盛大發售創造品牌溢價", p: 65, e: 35 }, b: { l: "維持常規菜單節省支出", p: 25, e: 0 } },
+        { t: "多元接班人選拔", d: "在選拔下任主廚時，打破血親與性別傳統，選擇最具平衡智慧者。", l: "永續領導傳承", a: { l: "啟動多元接班選拔機制", p: 40, e: 30 }, b: { l: "維持傳統嫡系接班制度", p: 30, e: -20 } },
+        { t: "移工教育津貼", d: "為外籍同仁提供語言學習與技能證照的全額補助。", l: "教育平等權利", a: { l: "資助進修厚植團隊實力", p: 32, e: 25 }, b: { l: "由員工自行負擔進修費", p: 10, e: -5 } },
+        { t: "隱形歧視查核", d: "聘請顧問進行潛意識偏見工作坊，處理團隊內部的隱形霸凌。", l: "職場心理安全", a: { l: "深度文化治理提升產能", p: 28, e: 35 }, b: { l: "發放手冊自行閱讀領悟", p: 12, e: -10 } },
+        { t: "多元家庭保險", d: "將公司團體保險的眷屬保障，擴及至所有同性伴侶與事實婚姻。", l: "CEDAW 第 1 條", a: { l: "全面納入保障留住人才", p: 25, e: 35 }, b: { l: "僅限法規定義配偶適用", p: 10, e: -15 } },
+        { t: "外國同仁長假", d: "支持外國同仁因文化或節慶需求申請一次性長假返鄉。", l: "文化平權保障", a: { l: "人力調配促成跨國返鄉", p: 15, e: 30 }, b: { l: "以人力吃緊為由婉拒", p: 35, e: -25 } },
+        { t: "育兒優先排班", d: "針對需要接送幼兒的基層同仁，優先排定穩定早班或晚班。", l: "友善托育支援", a: { l: "彈性排班機制提升效率", p: 28, e: 25 }, b: { l: "依職等決定排班權益", p: 20, e: -15 } },
+        { t: "性別比列委員會", d: "在內部晉升審核委員會中，強制規定女性代表必須達半數以上。", l: "參與權與決策權", a: { l: "落實多元決策降低風險", p: 35, e: 30 }, b: { l: "依行政職決定成員組成", p: 15, e: -12 } },
+        { t: "月經貧窮支持", d: "於全場所有盥洗室提供高品質且免費的女性生理用品。", l: "實質平等需求", a: { l: "編列年度預算長期供應", p: 25, e: 30 }, b: { l: "設置投幣式自動販賣機", p: 10, e: -5 } },
+        { t: "聽障服務系統", d: "於點餐介面導入手語視訊與圖形化系統，聘用聽障服務員。", l: "CEDAW 第 4 條", a: { l: "智慧系統升級開拓客源", p: 35, e: 25 }, b: { l: "維持口頭點餐降低成本", p: 15, e: -15 } },
+        { t: "高溫環境改善", d: "優化廚房通風與降溫設備，降低女性生理期工作之體能耗損。", l: "勞動環境平權", a: { l: "投資環境改善提升良率", p: 30, e: 20 }, b: { l: "廚房本就艱苦忍耐優先", p: 15, e: -12 } },
+        { t: "招募廣告用語", d: "修正徵才廣告中暗示年齡、性別或家庭狀態的偏見字眼。", l: "CEDAW 第 5 條", a: { l: "重塑專業導向品牌形象", p: 25, e: 20 }, b: { l: "沿用舊有風格追求點擊", p: 15, e: -15 } },
+        { t: "帶薪產檢假", d: "提供優於法律的全薪產檢假與陪產檢假，支持雙親共職。", l: "CEDAW 第 11 條", a: { l: "建立友善家庭福利標竿", p: 18, e: 30 }, b: { l: "按法律最低標半薪給付", p: 25, e: -15 } },
+        { t: "尾牙互動規定", d: "明確規定尾牙表演不得包含物化女性或強迫員工社交。", l: "職場倫理與安全", a: { l: "建立尊重彼此的宴會觀", p: 15, e: 25 }, b: { l: "熱鬧才是尾牙不再限制", p: 20, e: -25 } },
+        { t: "供應商誠信約章", d: "要求所有食材供應商簽署不使用壓榨勞工、保障性平的條約。", l: "社會責任連鎖", a: { l: "嚴選鏈結爭取高端訂單", p: 40, e: 35 }, b: { l: "價格最優不看附加條款", p: 50, e: -25 } },
+        { t: "技能證照補貼", d: "全額補助員工考取不分性別領域的專業餐飲執照。", l: "教育權利平等", a: { l: "厚植專業實力建立溢價", p: 35, e: 20 }, b: { l: "員工個人成長自理經費", p: 15, e: -5 } },
+        { t: "匿名騷擾信箱", d: "建立具備外部律師介入調查的匿名性騷擾舉報與處理系統。", l: "救濟與保障制度", a: { l: "深度治理降低營運風險", p: 20, e: 35 }, b: { l: "內部協調處理節省律費", p: 25, e: -20 } },
+        { t: "心理諮商保險", d: "將心理諮商費用納入員工團體保險，應對情緒勞動壓力。", l: "職場心理健康", a: { l: "穩定團隊降低離職風險", p: 25, e: 20 }, b: { l: "這非公司核心業務預算", p: 15, e: 0 } },
+        { t: "全場語音引導", d: "為了視障同仁或高齡員工，全場導入語音指令導引系統。", l: "CEDAW 第 4 條", a: { l: "技術升級邁向通用設計", p: 30, e: 25 }, b: { l: "維持手動操作降低費用", p: 15, e: -10 } },
+        { t: "職務垂直輪動", d: "鼓勵行政人員參與內場實作，內場人員參與門店管理培訓。", l: "消除職務隔離", a: { l: "打破隔閡激發營運創意", p: 35, e: 25 }, b: { l: "各安其位確保分工精密", p: 20, e: -10 } },
+        { t: "高齡接班教練", d: "聘請屆退資深員工擔任新進管理者的「顧問教練」延長職涯。", l: "人才續航計畫", a: { l: "經驗傳承降低管理失誤", p: 40, e: 20 }, b: { l: "屆齡即退確保人員換血", p: 25, e: -15 } },
+        { t: "外籍員工連假", d: "支持外國同仁一次性申請較長假期返鄉，並協調人力接軌。", l: "文化平等保障", a: { l: "包容文化建立終身忠誠", p: 20, e: 35 }, b: { l: "以店內人力吃緊為由拒絕", p: 35, e: -20 } },
+        { t: "產後適應減時", d: "允許產後一年的員工申請減時不減薪的「過渡期」排班模式。", l: "CEDAW 第 11 條", a: { l: "留住核心人才避免斷層", p: 22, e: 35 }, b: { l: "按工時計費節省預算", p: 30, e: -25 } },
+        { t: "品牌年度形象", d: "形象廣告選取專業且多樣化的員工真實樣貌，而非外聘模特。", l: "消除刻板印象", a: { l: "建立具備溫度的品牌力", p: 30, e: 25 }, b: { l: "選取大眾偏好的美型宣傳", p: 40, e: -15 } },
+        { t: "薪資公正性查核", d: "聘請四大會計師事務所針對性別、背景之薪資差異進行稽核。", l: "第 11 條同工同酬", a: { l: "獲取投資人與社會信賴", p: 45, e: 30 }, b: { l: "自行調整省下外部費用", p: 20, e: -10 } },
+        { t: "多元信仰空間", d: "於員工休息區劃設可靜心或祈禱的多元角落，包容不同信仰。", l: "文化權利共融", a: { l: "提升少數群體向心力", p: 15, e: 25 }, b: { l: "空間有限以用餐區為主", p: 10, e: -10 } },
+        { t: "數位轉型紅利", d: "導入全數位化的排班預約系統，大幅降低主管處理人力衝突成本。", l: "管理效能優化", a: { l: "技術獲利反饋員工福利", p: 50, e: 15 }, b: { l: "數據監控極大化產能", p: 35, e: -20 } },
+        { t: "男性產假津貼", d: "額外給予請滿產假的男性員工「家庭基金」獎勵，鼓勵分擔育兒。", l: "實質平等實踐", a: { l: "翻轉企業標籤吸引人才", p: 25, e: 35 }, b: { l: "依現有育嬰補助發放", p: 20, e: -10 } },
+        { t: "主理人未來宣言", d: "正式宣佈餐廳將以「人權、平等、共融」作為第一經營關鍵指標。", l: "品牌永續願景", a: { l: "發布宣言邁向精品之路", p: 55, e: 40 }, b: { l: "低調獲利維持穩健經營", p: 30, e: -10 } }
     ];
 
     const SUDDEN = [
-        { t: "【法規大稽查】", d: "政府突然實施職場性平稽核。若您的平權數值不足，品牌將面臨重罰與停業處分。", p: -60, e: 0 },
-        { t: "【社群媒體盛讚】", d: "您的友善職場政策被多位影響力人士轉發，品牌聲望大漲，訂位預約已滿至明年。", p: 75, e: 25 },
+        { t: "【法規大稽查】", d: "政府實施職場性平稽核。若您的平權分數不足，品牌將面臨重罰與停業處分。", p: -60, e: 0 },
+        { t: "【社群媒體盛讚】", d: "您的友善政策被多位影響力人士轉發，品牌聲望大漲，訂位預約已滿至明年。", p: 75, e: 25 },
         { t: "【國際金獎標章】", d: "榮獲國際平權餐飲標章，這項殊榮吸引了全球大型注資，獲利能力大幅提升。", p: 90, e: 40 },
-        { t: "【人才離職風暴】", d: "因忽視員工對公平體制的訴求引發基層抗議，營運陷入人力短缺的困境。", p: -45, e: -30 },
+        { t: "【人才離職風暴】", d: "因忽視員工對公平體制的訴求，引發基層抗議，營運陷入人力短缺的困境。", p: -45, e: -30 },
         { t: "【ESG 報告優選】", d: "被評為年度永續經營模範，帶動高端商務客群穩定湧入您的餐廳。", p: 65, e: 25 },
         { t: "【供應商權益醜聞】", d: "核心供應商被爆出壓榨勞工，您的品牌因連帶責任遭受抵制，營收驟降。", p: -40, e: -20 },
         { t: "【數位轉型紅利】", d: "新系統研發成功並大幅提升了跨部門協作效率，節省了巨額人力成本支出。", p: 60, e: 10 },
         { t: "【育兒友善標章】", d: "榮獲官方頒發之年度育兒友善職場標章，本月獲得政府大額補助獎勵金。", p: 35, e: 20 },
-        { t: "【薪資不公爆料】", d: "匿名員工爆料內部薪資制度依然存在性別隱形缺口，品牌公正性受到質疑。", p: -30, e: -40 },
+        { t: "【薪資不公爆料】", d: "匿名員工爆料內部薪資制度依然存在性別隱形缺口，品牌公正性受到嚴重質疑。", p: -30, e: -40 },
         { t: "【國際巨星造訪】", d: "知名平權運動巨星私下造訪並發文推廣，品牌效應引發了史無前例的溢價空間。", p: 80, e: 15 }
     ];
 
     let state = { p: 50, e: 50, round: 0, queue: [], pending: null };
 
-    function switchScreen(id) {
+    function showScreen(id) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        const target = document.getElementById(id);
-        if (target) target.classList.add('active');
+        document.getElementById(id).classList.add('active');
     }
 
     function handleStart() {
         state.queue = [...DB].sort(() => Math.random() - 0.5).slice(0, 10);
         state.round = 0; state.p = 50; state.e = 50;
-        switchScreen('screen-play');
+        showScreen('screen-play');
         renderUI();
     }
 
     function renderUI() {
         const cur = state.queue[state.round];
         if (!cur) return;
-        
         document.getElementById('ui-progress').style.width = `${(state.round + 1) * 10}%`;
         document.getElementById('ui-link').innerText = cur.l;
         document.getElementById('ui-title').innerText = cur.t;
         document.getElementById('ui-desc').innerText = cur.d;
-        
         const box = document.getElementById('ui-choices');
         box.innerHTML = '';
         [cur.a, cur.b].forEach(opt => {
@@ -272,16 +270,13 @@
             btn.onclick = () => {
                 state.p = Math.min(100, Math.max(0, state.p + opt.p));
                 state.e = Math.min(100, Math.max(0, state.e + opt.e));
-                
                 if (state.round > 0 && Math.random() < 0.28) {
                     const s = SUDDEN[Math.floor(Math.random() * SUDDEN.length)];
                     state.pending = s;
                     document.getElementById('ui-sudden-desc').innerText = s.d;
                     document.getElementById('ui-sudden-title').innerText = s.t;
-                    switchScreen('screen-sudden');
-                } else {
-                    next();
-                }
+                    showScreen('screen-sudden');
+                } else { next(); }
             };
             box.appendChild(btn);
         });
@@ -292,49 +287,37 @@
         const total = state.p + state.e;
         const deg = total === 0 ? 0 : ((state.p / total) * 2 - 1) * 28;
         document.getElementById('beam-group').style.transform = `translate(150px, 75px) rotate(${deg}deg)`;
-        
-        const moonScale = 0.85 + state.e/100;
-        const sunScale = 0.85 + state.p/100;
-        
-        document.getElementById('moon-orb').style.transform = `scale(${moonScale})`;
-        document.getElementById('sun-orb').style.transform = `scale(${sunScale})`;
-        
-        document.getElementById('moon-orb').style.opacity = state.e < 20 ? "0.4" : "1";
-        document.getElementById('sun-orb').style.opacity = state.p < 20 ? "0.4" : "1";
+        document.getElementById('moon-container').style.transform = `translate(0, 45px) scale(${0.85 + state.e/100})`;
+        document.getElementById('sun-container').style.transform = `translate(0, 45px) scale(${0.85 + state.p/100})`;
+        document.getElementById('moon-container').style.opacity = state.e < 20 ? "0.4" : "1";
+        document.getElementById('sun-container').style.opacity = state.p < 20 ? "0.4" : "1";
     }
 
     function handleSuddenClose() {
-        if (state.pending) {
-            state.p = Math.min(100, Math.max(0, state.p + state.pending.p));
-            state.e = Math.min(100, Math.max(0, state.e + state.pending.e));
-        }
+        state.p = Math.min(100, Math.max(0, state.p + state.pending.p));
+        state.e = Math.min(100, Math.max(0, state.e + state.pending.e));
         next();
     }
 
     function next() {
-        if (state.round >= 9 || state.p <= 0 || state.e <= 0) {
-            finish();
-        } else {
-            state.round++;
-            switchScreen('screen-play');
-            renderUI();
-        }
+        if (state.round >= 9 || state.p <= 0 || state.e <= 0) { finish(); }
+        else { state.round++; showScreen('screen-play'); renderUI(); }
     }
 
     function finish() {
         const d = Math.abs(state.p - state.e);
         let t, ds, c;
         if (d <= 8) {
-            t = "傳奇主理人"; ds = "您達成極致的藝術級平衡。利潤與尊嚴在此共同綻放，品牌已成為業界永恆的標竿。"; c = "var(--sun-gold)";
+            t = "傳奇主理人"; ds = "您證明了『極致的平權即是極致的商機』。獲利與尊嚴在此共同綻放，品牌已成為業界永恆的標竿。"; c = "var(--sun-gold)";
         } else if (d <= 20) {
-            t = "卓越經營者"; ds = "您在變動中守住了平衡。品牌具備強大的生命力與價值感，是極具價值的企業模範。"; c = "var(--champagne-gold)";
+            t = "卓越經營者"; ds = "在驚濤駭浪中，您守住了平衡。品牌具備強大的生命力與價值感，成功在變動中維持優雅。"; c = "var(--champagne-gold)";
         } else {
             t = "失衡的願景"; ds = "天秤已傾斜。缺乏平權支撐的利潤如海市蜃樓，或過度理想的支出使營運陷入困局。請重新審視經營的本質。"; c = "var(--rose)";
         }
         document.getElementById('ui-result-title').innerText = t;
         document.getElementById('ui-result-title').style.color = c;
         document.getElementById('ui-result-desc').innerText = ds;
-        switchScreen('screen-result');
+        showScreen('screen-result');
     }
 </script>
 </body>
