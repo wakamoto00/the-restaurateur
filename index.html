@@ -1,312 +1,399 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.3">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; -webkit-text-stroke: #000000}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; -webkit-text-stroke: #000000; min-height: 16.0px}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #4d5055; -webkit-text-stroke: #4d5055}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #18702b; -webkit-text-stroke: #18702b}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #0e6e6d; -webkit-text-stroke: #0e6e6d}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6f0ec3; -webkit-text-stroke: #6f0ec3}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #bf1c25; -webkit-text-stroke: #bf1c25}
-    span.s1 {font-kerning: none; color: #6f0ec3; background-color: #ecf1f7; -webkit-text-stroke: 0px #6f0ec3}
-    span.s2 {font-kerning: none; background-color: #ecf1f7}
-    span.s3 {font-kerning: none; color: #0e6e6d; background-color: #ecf1f7; -webkit-text-stroke: 0px #0e6e6d}
-    span.s4 {font-kerning: none; color: #18702b; background-color: #ecf1f7; -webkit-text-stroke: 0px #18702b}
-    span.s5 {font-kerning: none}
-    span.s6 {font-kerning: none; color: #a4450b; background-color: #ecf1f7; -webkit-text-stroke: 0px #a4450b}
-    span.s7 {font-kerning: none; color: #000000; background-color: #ecf1f7; -webkit-text-stroke: 0px #000000}
-    span.s8 {font-kerning: none; color: #bf1c25; background-color: #ecf1f7; -webkit-text-stroke: 0px #bf1c25}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Restaurateur | 精品經營藝術</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:ital,wght@1,500&family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --indigo-deep: #0e101a;
+            --champagne-gold: #e2d1c3;
+            --sun-gold: #fbbf24;
+            --moon-blue: #818cf8;
+            --rose-accent: #f43f5e;
+        }
+
+        body {
+            background-color: var(--indigo-deep);
+            color: #f0f2f5;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .font-serif { font-family: 'Cormorant Garamond', serif; }
+        .font-cursive { font-family: 'Parisienne', cursive; }
+
+        /* 背景噴砂質感 */
+        .noise-bg {
+            position: fixed;
+            inset: 0;
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* 主容器 */
+        .app-container {
+            width: 95%;
+            max-width: 420px;
+            height: 85vh;
+            max-height: 800px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(226, 209, 195, 0.15);
+            border-radius: 3.5rem;
+            backdrop-filter: blur(25px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8);
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        /* 畫面切換動畫 */
+        .screen {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            padding: 2rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+        .screen.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 藝術按鈕 */
+        .btn-gold {
+            background: transparent;
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            color: var(--sun-gold);
+            padding: 1.2rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .btn-gold:hover {
+            background: rgba(251, 191, 36, 0.08);
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.1);
+        }
+
+        .btn-option {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1.4rem;
+            border-radius: 1.8rem;
+            text-align: left;
+            transition: all 0.3s;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        .btn-option:hover {
+            border-color: rgba(251, 191, 36, 0.5);
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateX(5px);
+        }
+
+        /* 天秤元素 */
+        #beam { transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .viz-glow { transition: transform 1s ease-in-out, filter 1s ease-in-out; }
+        
+        .sun-glow { filter: drop-shadow(0 0 15px var(--sun-gold)); }
+        .moon-glow { filter: drop-shadow(0 0 15px var(--moon-blue)); }
+
+        .custom-scroll::-webkit-scrollbar { width: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(226, 209, 195, 0.2); border-radius: 10px; }
+    </style>
 </head>
 <body>
-<p class="p1"><span class="s1">import</span><span class="s2"> </span><span class="s3">React</span><span class="s2">, { useState, useCallback, useEffect, useMemo } </span><span class="s1">from</span><span class="s2"> </span><span class="s4">'react'</span><span class="s2">;</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p3"><span class="s2">// --- 視覺圖示元件 (Inline SVG) ---</span></p>
-<p class="p1"><span class="s1">const</span><span class="s2"> </span><span class="s3">SunIcon</span><span class="s2"> = ({ glow, size = </span><span class="s6">40</span><span class="s2"> }) =&gt; (</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>&lt;svg width={size} height={size} viewBox=</span><span class="s4">"0 0 24 24"</span><span class="s2"> fill=</span><span class="s4">"none"</span><span class="s2"> stroke=</span><span class="s4">"#FBBF24"</span><span class="s2"> strokeWidth=</span><span class="s4">"1.5"</span><span class="s2"> strokeLinecap=</span><span class="s4">"round"</span><span class="s2"> strokeLinejoin=</span><span class="s4">"round"</span><span class="s2"><span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">       </span>className={glow ? </span><span class="s2">"drop-shadow-[0_0_15px_rgba(251,191,36,1)] transition-all duration-1000"</span><span class="s7"> : </span><span class="s2">"opacity-40 transition-all duration-1000"</span><span class="s7">}&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;circle cx=</span><span class="s4">"12"</span><span class="s2"> cy=</span><span class="s4">"12"</span><span class="s2"> r=</span><span class="s4">"5"</span><span class="s2"> fill=</span><span class="s4">"#FBBF24"</span><span class="s2"> /&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span>&lt;path d=</span><span class="s2">"M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"</span><span class="s7"> /&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>&lt;/svg&gt;</span></p>
-<p class="p1"><span class="s2">);</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p1"><span class="s1">const</span><span class="s2"> </span><span class="s3">MoonIcon</span><span class="s2"> = ({ glow, size = </span><span class="s6">40</span><span class="s2"> }) =&gt; (</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>&lt;svg width={size} height={size} viewBox=</span><span class="s4">"0 0 24 24"</span><span class="s2"> fill=</span><span class="s4">"none"</span><span class="s2"> stroke=</span><span class="s4">"#818CF8"</span><span class="s2"> strokeWidth=</span><span class="s4">"1.5"</span><span class="s2"> strokeLinecap=</span><span class="s4">"round"</span><span class="s2"> strokeLinejoin=</span><span class="s4">"round"</span><span class="s2"><span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">       </span>className={glow ? </span><span class="s2">"drop-shadow-[0_0_15px_rgba(129,140,248,1)] transition-all duration-1000"</span><span class="s7"> : </span><span class="s2">"opacity-40 transition-all duration-1000"</span><span class="s7">}&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span>&lt;path d=</span><span class="s2">"M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"</span><span class="s7"> fill=</span><span class="s2">"#818CF8"</span><span class="s7"> /&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>&lt;/svg&gt;</span></p>
-<p class="p1"><span class="s2">);</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p5"><span class="s1">const</span><span class="s7"> </span><span class="s2">ScaleDecoration</span><span class="s7"> = () =&gt; (</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">  </span>&lt;svg className=</span><span class="s2">"absolute inset-0 w-full h-full opacity-10 pointer-events-none"</span><span class="s7"> viewBox=</span><span class="s2">"0 0 400 400"</span><span class="s7">&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;circle cx=</span><span class="s4">"200"</span><span class="s2"> cy=</span><span class="s4">"200"</span><span class="s2"> r=</span><span class="s4">"140"</span><span class="s2"> stroke=</span><span class="s4">"#E2D1C3"</span><span class="s2"> fill=</span><span class="s4">"none"</span><span class="s2"> strokeWidth=</span><span class="s4">"0.5"</span><span class="s2"> strokeDasharray=</span><span class="s4">"4 8"</span><span class="s2"> /&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;circle cx=</span><span class="s4">"200"</span><span class="s2"> cy=</span><span class="s4">"200"</span><span class="s2"> r=</span><span class="s4">"180"</span><span class="s2"> stroke=</span><span class="s4">"#E2D1C3"</span><span class="s2"> fill=</span><span class="s4">"none"</span><span class="s2"> strokeWidth=</span><span class="s4">"0.2"</span><span class="s2"> /&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>&lt;/svg&gt;</span></p>
-<p class="p1"><span class="s2">);</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p3"><span class="s2">// --- 50 項完整事件庫 ---</span></p>
-<p class="p5"><span class="s1">const</span><span class="s7"> </span><span class="s2">ALL_EVENTS</span><span class="s7"> = [</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">1</span><span class="s2">, title: </span><span class="s4">"自動化重物搬運"</span><span class="s2">, desc: </span><span class="s4">"引進機械手臂輔助內場搬運，打破性別體能偏見。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 5 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"投資輔具 (效率大漲)"</span><span class="s2">, effect: { p: </span><span class="s6">18</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"維持傳統人力 (省購置費)"</span><span class="s2">, effect: { p: </span><span class="s6">5</span><span class="s2">, e: -</span><span class="s6">15</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">2</span><span class="s2">, title: </span><span class="s4">"懷孕主管復職"</span><span class="s2">, desc: </span><span class="s4">"主動為產後主管提供技能更新與彈性回歸計畫。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 11 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"啟動留任計畫 (保留戰力)"</span><span class="s2">, effect: { p: </span><span class="s6">12</span><span class="s2">, e: </span><span class="s6">20</span><span class="s2"> } }, { label: </span><span class="s4">"視同新人 (省管理費)"</span><span class="s2">, effect: { p: </span><span class="s6">5</span><span class="s2">, e: -</span><span class="s6">25</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">3</span><span class="s2">, title: </span><span class="s4">"情緒勞動津貼"</span><span class="s2">, desc: </span><span class="s4">"外場服務具高度專業，給予對等薪資與支持。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 11 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"專業化敘薪 (提升品質)"</span><span class="s2">, effect: { p: </span><span class="s6">20</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"嚴格控制工資 (控制開支)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">12</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">4</span><span class="s2">, title: </span><span class="s4">"騷擾防治零容忍"</span><span class="s2">, desc: </span><span class="s4">"即使是大客戶，發生騷擾行為也絕不姑息。"</span><span class="s2">, link: </span><span class="s4">"職場安全"</span><span class="s2">, options: [{ label: </span><span class="s4">"嚴正拒絕客 (建立品牌感)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: </span><span class="s6">30</span><span class="s2"> } }, { label: </span><span class="s4">"息事寧人 (確保短期業績)"</span><span class="s2">, effect: { p: </span><span class="s6">35</span><span class="s2">, e: -</span><span class="s6">30</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">5</span><span class="s2">, title: </span><span class="s4">"移工晉升制度"</span><span class="s2">, desc: </span><span class="s4">"為優秀移工開設領導課程，拔擢為外場經理。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 11 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"培訓升遷 (跨國客源大增)"</span><span class="s2">, effect: { p: </span><span class="s6">28</span><span class="s2">, e: </span><span class="s6">20</span><span class="s2"> } }, { label: </span><span class="s4">"維持基層事務 (保穩定)"</span><span class="s2">, effect: { p: </span><span class="s6">5</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">6</span><span class="s2">, title: </span><span class="s4">"全薪生理假"</span><span class="s2">, desc: </span><span class="s4">"提供優於法規全薪生理假，吸引頂尖人才。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 4 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"友善給假 (流動率降)"</span><span class="s2">, effect: { p: </span><span class="s6">15</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"執行扣薪 (化工時)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">20</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">7</span><span class="s2">, title: </span><span class="s4">"性別中立制服"</span><span class="s2">, desc: </span><span class="s4">"打造無性別美學制服，塑造國際精品形象。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 5 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"形象翻新 (吸引精品客)"</span><span class="s2">, effect: { p: </span><span class="s6">22</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"傳統剪裁 (省設計費)"</span><span class="s2">, effect: { p: </span><span class="s6">5</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">8</span><span class="s2">, title: </span><span class="s4">"高齡二度就業"</span><span class="s2">, desc: </span><span class="s4">"聘僱資深女性主廚，其秘方成為餐廳冠軍菜。"</span><span class="s2">, link: </span><span class="s4">"消除歧視"</span><span class="s2">, options: [{ label: </span><span class="s4">"錄取研發 (營收暴漲)"</span><span class="s2">, effect: { p: </span><span class="s6">45</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"年輕化優先 (保節奏)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">9</span><span class="s2">, title: </span><span class="s4">"奢華哺乳空間"</span><span class="s2">, desc: </span><span class="s4">"將包廂改裝為頂級哺乳室，成為親子客首選。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 11 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"空間改造 (高端客群增)"</span><span class="s2">, effect: { p: </span><span class="s6">30</span><span class="s2">, e: </span><span class="s6">20</span><span class="s2"> } }, { label: </span><span class="s4">"維持席次 (確保翻桌率)"</span><span class="s2">, effect: { p: </span><span class="s6">15</span><span class="s2">, e: -</span><span class="s6">15</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">10</span><span class="s2">, title: </span><span class="s4">"職場尊重講習"</span><span class="s2">, desc: </span><span class="s4">"全員強制參與平權講習，建立高端職場氛圍。"</span><span class="s2">, link: </span><span class="s4">"職場文化"</span><span class="s2">, options: [{ label: </span><span class="s4">"深度治理 (提升效能)"</span><span class="s2">, effect: { p: </span><span class="s6">15</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"視為形式 (省營業時間)"</span><span class="s2">, effect: { p: </span><span class="s6">5</span><span class="s2">, e: -</span><span class="s6">20</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">11</span><span class="s2">, title: </span><span class="s4">"深夜安心接駁"</span><span class="s2">, desc: </span><span class="s4">"提供女性及偏遠員工交通補助，穩定產能。"</span><span class="s2">, link: </span><span class="s4">"職場安全"</span><span class="s2">, options: [{ label: </span><span class="s4">"提供接駁 (穩定夜班)"</span><span class="s2">, effect: { p: </span><span class="s6">20</span><span class="s2">, e: </span><span class="s6">12</span><span class="s2"> } }, { label: </span><span class="s4">"員工自理 (省預算)"</span><span class="s2">, effect: { p: </span><span class="s6">5</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">12</span><span class="s2">, title: </span><span class="s4">"同性伴侶福利"</span><span class="s2">, desc: </span><span class="s4">"福利全面與法定配偶看齊，吸引多元人才。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 1 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"全面納入 (聲望提升)"</span><span class="s2">, effect: { p: </span><span class="s6">18</span><span class="s2">, e: </span><span class="s6">20</span><span class="s2"> } }, { label: </span><span class="s4">"僅限法定 (省保費)"</span><span class="s2">, effect: { p: </span><span class="s6">5</span><span class="s2">, e: -</span><span class="s6">15</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">13</span><span class="s2">, title: </span><span class="s4">"薪資透明校正"</span><span class="s2">, desc: </span><span class="s4">"主動分析薪資結構，補齊性別薪資缺口。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 11 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"主動補齊 (士氣大漲)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: </span><span class="s6">25</span><span class="s2"> } }, { label: </span><span class="s4">"逐年調整 (保現流)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">14</span><span class="s2">, title: </span><span class="s4">"全能廚具改造"</span><span class="s2">, desc: </span><span class="s4">"引進語音提示設備，聘僱具天賦的身障廚師。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 4 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"智慧改造 (良率提升)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: </span><span class="s6">18</span><span class="s2"> } }, { label: </span><span class="s4">"維持現況 (省投資)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">12</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">15</span><span class="s2">, title: </span><span class="s4">"穆斯林友善營運"</span><span class="s2">, desc: </span><span class="s4">"通過清真認證並支持員工佩戴特製頭巾。"</span><span class="s2">, link: </span><span class="s4">"文化平權"</span><span class="s2">, options: [{ label: </span><span class="s4">"認證加開 (擴大客源)"</span><span class="s2">, effect: { p: </span><span class="s6">40</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"維持原樣 (管理單純)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">16</span><span class="s2">, title: </span><span class="s4">"去性別廣告"</span><span class="s2">, desc: </span><span class="s4">"以專業實力為廣告重心，吸引注重價值的客群。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 5 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"品牌重塑 (提升溢價)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"傳統廣告 (保流量)"</span><span class="s2">, effect: { p: </span><span class="s6">15</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">17</span><span class="s2">, title: </span><span class="s4">"單親家長彈性班"</span><span class="s2">, desc: </span><span class="s4">"針對單親同仁提供特殊排班，穩定核心人力。"</span><span class="s2">, link: </span><span class="s4">"友善家庭"</span><span class="s2">, options: [{ label: </span><span class="s4">"支持彈性 (降低流失)"</span><span class="s2">, effect: { p: </span><span class="s6">18</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"一視同仁 (好排班)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">8</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">18</span><span class="s2">, title: </span><span class="s4">"企業產假專用金"</span><span class="s2">, desc: </span><span class="s4">"設立生育基金，優於法律吸引適育頂尖團隊。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 11 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"加碼津貼 (幸福標竿)"</span><span class="s2">, effect: { p: </span><span class="s6">15</span><span class="s2">, e: </span><span class="s6">20</span><span class="s2"> } }, { label: </span><span class="s4">"法規最低 (控成本)"</span><span class="s2">, effect: { p: </span><span class="s6">20</span><span class="s2">, e: -</span><span class="s6">15</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">19</span><span class="s2">, title: </span><span class="s4">"打破職務刻板"</span><span class="s2">, desc: </span><span class="s4">"鼓勵女性掌火、男性擺盤，發揮非傳統優勢。"</span><span class="s2">, link: </span><span class="s4">"消除偏見"</span><span class="s2">, options: [{ label: </span><span class="s4">"混合培訓 (戰力升級)"</span><span class="s2">, effect: { p: </span><span class="s6">20</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"依習慣分配 (低阻力)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">20</span><span class="s2">, title: </span><span class="s4">"全齡成長路徑"</span><span class="s2">, desc: </span><span class="s4">"為不同年齡層員工設計客製化成長福利。"</span><span class="s2">, link: </span><span class="s4">"人才永續"</span><span class="s2">, options: [{ label: </span><span class="s4">"多元路徑 (最穩團隊)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"汰弱留強 (降人事費)"</span><span class="s2">, effect: { p: </span><span class="s6">30</span><span class="s2">, e: -</span><span class="s6">20</span><span class="s2"> } }] },</span></p>
-<p class="p3"><span class="s7"><span class="Apple-converted-space">  </span></span><span class="s2">// ... 其餘 30 題依此類推並包含在高波動 P 值邏輯中</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">21</span><span class="s2">, title: </span><span class="s4">"決策層比例"</span><span class="s2">, desc: </span><span class="s4">"強制高階決策會議必須有 40% 女性參與。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 7 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"多元決策 (降錯誤率)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: </span><span class="s6">20</span><span class="s2"> } }, { label: </span><span class="s4">"隨緣選拔 (小圈子)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">15</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">22</span><span class="s2">, title: </span><span class="s4">"多元語言補貼"</span><span class="s2">, desc: </span><span class="s4">"獎勵員工用母語接待國際客，擴展市場。"</span><span class="s2">, link: </span><span class="s4">"族群平權"</span><span class="s2">, options: [{ label: </span><span class="s4">"語言津貼 (外客大漲)"</span><span class="s2">, effect: { p: </span><span class="s6">35</span><span class="s2">, e: </span><span class="s6">12</span><span class="s2"> } }, { label: </span><span class="s4">"單一語系 (好管理)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">5</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">23</span><span class="s2">, title: </span><span class="s4">"心理諮商保險"</span><span class="s2">, desc: </span><span class="s4">"將心理諮商納入保險，降低隱形倦怠。"</span><span class="s2">, link: </span><span class="s4">"職場健康"</span><span class="s2">, options: [{ label: </span><span class="s4">"全額保險 (產能提升)"</span><span class="s2">, effect: { p: </span><span class="s6">18</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"員工自負 (省經費)"</span><span class="s2">, effect: { p: </span><span class="s6">8</span><span class="s2">, e: -</span><span class="s6">5</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">24</span><span class="s2">, title: </span><span class="s4">"盲選招募"</span><span class="s2">, desc: </span><span class="s4">"履歷去姓名性別，單純實作考選，錄取天才。"</span><span class="s2">, link: </span><span class="s4">"消除偏見"</span><span class="s2">, options: [{ label: </span><span class="s4">"盲選制度 (創新強)"</span><span class="s2">, effect: { p: </span><span class="s6">30</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"傳統面試 (省作業)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">8</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">25</span><span class="s2">, title: </span><span class="s4">"帶薪照顧假"</span><span class="s2">, desc: </span><span class="s4">"提供突發家庭照顧支薪假，換取高忠誠度。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 11 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"支持家庭 (留才高)"</span><span class="s2">, effect: { p: </span><span class="s6">15</span><span class="s2">, e: </span><span class="s6">18</span><span class="s2"> } }, { label: </span><span class="s4">"請假扣薪 (省支出)"</span><span class="s2">, effect: { p: </span><span class="s6">20</span><span class="s2">, e: -</span><span class="s6">20</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">26</span><span class="s2">, title: </span><span class="s4">"環境控溫"</span><span class="s2">, desc: </span><span class="s4">"改善內場通風，緩解女性生理期不適感。"</span><span class="s2">, link: </span><span class="s4">"環境友善"</span><span class="s2">, options: [{ label: </span><span class="s4">"環境優化 (效能升)"</span><span class="s2">, effect: { p: </span><span class="s6">28</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"忍耐是專業 (省電)"</span><span class="s2">, effect: { p: </span><span class="s6">18</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">27</span><span class="s2">, title: </span><span class="s4">"證照補貼"</span><span class="s2">, desc: </span><span class="s4">"全額補貼考取平權或餐飲證照，提升品牌力。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 10 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"證照獎勵 (溢價升)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"自行負擔 (省教育金)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">5</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">28</span><span class="s2">, title: </span><span class="s4">"供應商條款"</span><span class="s2">, desc: </span><span class="s4">"優先採購重視 ESG 與平權供應商，獲高合約。"</span><span class="s2">, link: </span><span class="s4">"社會責任"</span><span class="s2">, options: [{ label: </span><span class="s4">"嚴選鏈結 (獲精品單)"</span><span class="s2">, effect: { p: </span><span class="s6">18</span><span class="s2">, e: </span><span class="s6">25</span><span class="s2"> } }, { label: </span><span class="s4">"唯利是圖 (採購低)"</span><span class="s2">, effect: { p: </span><span class="s6">40</span><span class="s2">, e: -</span><span class="s6">20</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">29</span><span class="s2">, title: </span><span class="s4">"職場教練"</span><span class="s2">, desc: </span><span class="s4">"配置專屬教練給女性新人，縮短摸索期成本。"</span><span class="s2">, link: </span><span class="s4">"培力計畫"</span><span class="s2">, options: [{ label: </span><span class="s4">"教練津貼 (戰力快)"</span><span class="s2">, effect: { p: </span><span class="s6">20</span><span class="s2">, e: </span><span class="s6">12</span><span class="s2"> } }, { label: </span><span class="s4">"自然適應 (省管理)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">5</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">30</span><span class="s2">, title: </span><span class="s4">"多元菜單"</span><span class="s2">, desc: </span><span class="s4">"開發針對素食、穆斯林的高單價精品套餐。"</span><span class="s2">, link: </span><span class="s4">"市場共融"</span><span class="s2">, options: [{ label: </span><span class="s4">"研發多元餐 (單價飆)"</span><span class="s2">, effect: { p: </span><span class="s6">50</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"單一熱銷 (效率高)"</span><span class="s2">, effect: { p: </span><span class="s6">20</span><span class="s2">, e: -</span><span class="s6">5</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">31</span><span class="s2">, title: </span><span class="s4">"獨立申訴"</span><span class="s2">, desc: </span><span class="s4">"聘請第三方處理騷擾舉報，建立透明信任。"</span><span class="s2">, link: </span><span class="s4">"救濟制度"</span><span class="s2">, options: [{ label: </span><span class="s4">"外部法務 (留精英)"</span><span class="s2">, effect: { p: </span><span class="s6">15</span><span class="s2">, e: </span><span class="s6">22</span><span class="s2"> } }, { label: </span><span class="s4">"內部調解 (省律費)"</span><span class="s2">, effect: { p: </span><span class="s6">20</span><span class="s2">, e: -</span><span class="s6">15</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">32</span><span class="s2">, title: </span><span class="s4">"遠端混合"</span><span class="s2">, desc: </span><span class="s4">"後勤人員開放混合辦公，省辦公租金。"</span><span class="s2">, link: </span><span class="s4">"彈性職場"</span><span class="s2">, options: [{ label: </span><span class="s4">"混合辦公 (租金省)"</span><span class="s2">, effect: { p: </span><span class="s6">35</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"全體進駐 (好控時)"</span><span class="s2">, effect: { p: </span><span class="s6">15</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">33</span><span class="s2">, title: </span><span class="s4">"國際金獎"</span><span class="s2">, desc: </span><span class="s4">"參加國際人權企業大賽，獲獎後海外客暴增。"</span><span class="s2">, link: </span><span class="s4">"價值傳播"</span><span class="s2">, options: [{ label: </span><span class="s4">"報名參賽 (客源漲)"</span><span class="s2">, effect: { p: </span><span class="s6">45</span><span class="s2">, e: </span><span class="s6">25</span><span class="s2"> } }, { label: </span><span class="s4">"埋頭苦幹 (不名譽)"</span><span class="s2">, effect: { p: </span><span class="s6">15</span><span class="s2">, e: </span><span class="s6">0</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">34</span><span class="s2">, title: </span><span class="s4">"利潤共享"</span><span class="s2">, desc: </span><span class="s4">"設計平權 KPI 達標分紅，全員拼品牌價值。"</span><span class="s2">, link: </span><span class="s4">"經濟權利"</span><span class="s2">, options: [{ label: </span><span class="s4">"利潤分享 (業績拼)"</span><span class="s2">, effect: { p: </span><span class="s6">55</span><span class="s2">, e: </span><span class="s6">20</span><span class="s2"> } }, { label: </span><span class="s4">"固定薪資 (現流穩)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: -</span><span class="s6">12</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">35</span><span class="s2">, title: </span><span class="s4">"全友善空間"</span><span class="s2">, desc: </span><span class="s4">"打造頂級性別友善盥洗室，吸引豪客。"</span><span class="s2">, link: </span><span class="s4">"空間平等"</span><span class="s2">, options: [{ label: </span><span class="s4">"質感改造 (客價升)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"維持二分 (預算留)"</span><span class="s2">, effect: { p: </span><span class="s6">15</span><span class="s2">, e: -</span><span class="s6">5</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">36</span><span class="s2">, title: </span><span class="s4">"AI 去標籤"</span><span class="s2">, desc: </span><span class="s4">"採購 AI 去標籤甄選系統，避免人為偏見。"</span><span class="s2">, link: </span><span class="s4">"消除偏見"</span><span class="s2">, options: [{ label: </span><span class="s4">"技術導入 (創新升)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: </span><span class="s6">12</span><span class="s2"> } }, { label: </span><span class="s4">"傳統審核 (習慣性)"</span><span class="s2">, effect: { p: </span><span class="s6">15</span><span class="s2">, e: -</span><span class="s6">5</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">37</span><span class="s2">, title: </span><span class="s4">"產假保障"</span><span class="s2">, desc: </span><span class="s4">"原職原薪回歸並提供獎金，建立業界標竿。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 11 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"100% 保障 (人才穩)"</span><span class="s2">, effect: { p: </span><span class="s6">18</span><span class="s2">, e: </span><span class="s6">18</span><span class="s2"> } }, { label: </span><span class="s4">"視人力調 (機動性)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: -</span><span class="s6">15</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">38</span><span class="s2">, title: </span><span class="s4">"技術傳承金"</span><span class="s2">, desc: </span><span class="s4">"獎勵資深員工傳承給年輕女性，縮短學習。"</span><span class="s2">, link: </span><span class="s4">"教育培訓"</span><span class="s2">, options: [{ label: </span><span class="s4">"導師制度 (出餐快)"</span><span class="s2">, effect: { p: </span><span class="s6">35</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"自由發展 (省獎金)"</span><span class="s2">, effect: { p: </span><span class="s6">15</span><span class="s2">, e: -</span><span class="s6">5</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">39</span><span class="s2">, title: </span><span class="s4">"彩虹套餐"</span><span class="s2">, desc: </span><span class="s4">"推出主題晚宴，獲得新世代消費者極大青睞。"</span><span class="s2">, link: </span><span class="s4">"價值行銷"</span><span class="s2">, options: [{ label: </span><span class="s4">"主題行銷 (業績破)"</span><span class="s2">, effect: { p: </span><span class="s6">50</span><span class="s2">, e: </span><span class="s6">20</span><span class="s2"> } }, { label: </span><span class="s4">"傳統促銷 (保險感)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: -</span><span class="s6">5</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">40</span><span class="s2">, title: </span><span class="s4">"家庭補貼"</span><span class="s2">, desc: </span><span class="s4">"提供外籍同仁在內的家庭旅遊，向心力最強。"</span><span class="s2">, link: </span><span class="s4">"員工福利"</span><span class="s2">, options: [{ label: </span><span class="s4">"補助全家 (零離職)"</span><span class="s2">, effect: { p: </span><span class="s6">18</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"現金獎勵 (現實面)"</span><span class="s2">, effect: { p: </span><span class="s6">30</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">41</span><span class="s2">, title: </span><span class="s4">"生理精品"</span><span class="s2">, desc: </span><span class="s4">"洗手間提供高品質生理用品，回訪率提升。"</span><span class="s2">, link: </span><span class="s4">"實質平等"</span><span class="s2">, options: [{ label: </span><span class="s4">"免費供應 (口碑轉)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } }, { label: </span><span class="s4">"自動販賣 (微利)"</span><span class="s2">, effect: { p: </span><span class="s6">5</span><span class="s2">, e: -</span><span class="s6">5</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">42</span><span class="s2">, title: </span><span class="s4">"男產假倡導"</span><span class="s2">, desc: </span><span class="s4">"鼓勵男主管休滿產假，翻轉企業加班文化。"</span><span class="s2">, link: </span><span class="s4">"打破刻板"</span><span class="s2">, options: [{ label: </span><span class="s4">"帶頭示範 (形象佳)"</span><span class="s2">, effect: { p: </span><span class="s6">12</span><span class="s2">, e: </span><span class="s6">25</span><span class="s2"> } }, { label: </span><span class="s4">"順其自然 (不干涉)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">43</span><span class="s2">, title: </span><span class="s4">"女廚特訓"</span><span class="s2">, desc: </span><span class="s4">"專為女廚設計控火特訓，內場實力倍增。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 10 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"特訓計畫 (效能升)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: </span><span class="s6">18</span><span class="s2"> } }, { label: </span><span class="s4">"混合訓練 (省場租)"</span><span class="s2">, effect: { p: </span><span class="s6">12</span><span class="s2">, e: -</span><span class="s6">5</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">44</span><span class="s2">, title: </span><span class="s4">"深夜車隊"</span><span class="s2">, desc: </span><span class="s4">"簽約專屬安心車隊，保障員工通勤絕對安全。"</span><span class="s2">, link: </span><span class="s4">"職場安全"</span><span class="s2">, options: [{ label: </span><span class="s4">"專屬接送 (排班韌)"</span><span class="s2">, effect: { p: </span><span class="s6">22</span><span class="s2">, e: </span><span class="s6">12</span><span class="s2"> } }, { label: </span><span class="s4">"自行叫車 (省金)"</span><span class="s2">, effect: { p: </span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">45</span><span class="s2">, title: </span><span class="s4">"平權宣言"</span><span class="s2">, desc: </span><span class="s4">"宣布餐廳願景以平權為第一獲利指標。"</span><span class="s2">, link: </span><span class="s4">"永續經營"</span><span class="s2">, options: [{ label: </span><span class="s4">"願景發布 (獲投資)"</span><span class="s2">, effect: { p: </span><span class="s6">40</span><span class="s2">, e: </span><span class="s6">30</span><span class="s2"> } }, { label: </span><span class="s4">"保持低調 (保守性)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">46</span><span class="s2">, title: </span><span class="s4">"薪資稽核"</span><span class="s2">, desc: </span><span class="s4">"聘請四大會計師事務所進行薪資透明稽查。"</span><span class="s2">, link: </span><span class="s4">"CEDAW 第 11 條"</span><span class="s2">, options: [{ label: </span><span class="s4">"透明稽核 (融資優)"</span><span class="s2">, effect: { p: </span><span class="s6">30</span><span class="s2">, e: </span><span class="s6">20</span><span class="s2"> } }, { label: </span><span class="s4">"自行估算 (省費用)"</span><span class="s2">, effect: { p: </span><span class="s6">12</span><span class="s2">, e: -</span><span class="s6">5</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">47</span><span class="s2">, title: </span><span class="s4">"混合彈性"</span><span class="s2">, desc: </span><span class="s4">"後勤全面彈性上下班，避開塞車提高產能。"</span><span class="s2">, link: </span><span class="s4">"現代管理"</span><span class="s2">, options: [{ label: </span><span class="s4">"彈性管理 (時效升)"</span><span class="s2">, effect: { p: </span><span class="s6">28</span><span class="s2">, e: </span><span class="s6">12</span><span class="s2"> } }, { label: </span><span class="s4">"全員點名 (控人力)"</span><span class="s2">, effect: { p: </span><span class="s6">18</span><span class="s2">, e: -</span><span class="s6">10</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">48</span><span class="s2">, title: </span><span class="s4">"停業培力"</span><span class="s2">, desc: </span><span class="s4">"淡季停業一天進行全員深度平權培力。"</span><span class="s2">, link: </span><span class="s4">"教育推廣"</span><span class="s2">, options: [{ label: </span><span class="s4">"停業訓練 (凝聚力)"</span><span class="s2">, effect: { p: </span><span class="s6">20</span><span class="s2">, e: </span><span class="s6">25</span><span class="s2"> } }, { label: </span><span class="s4">"發放手冊 (省營業)"</span><span class="s2">, effect: { p: </span><span class="s6">8</span><span class="s2">, e: -</span><span class="s6">5</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">49</span><span class="s2">, title: </span><span class="s4">"限定晚宴"</span><span class="s2">, desc: </span><span class="s4">"開發「平衡之衡」套餐，資助平權活動。"</span><span class="s2">, link: </span><span class="s4">"品牌形象"</span><span class="s2">, options: [{ label: </span><span class="s4">"盛大販售 (營業額)"</span><span class="s2">, effect: { p: </span><span class="s6">65</span><span class="s2">, e: </span><span class="s6">20</span><span class="s2"> } }, { label: </span><span class="s4">"常規菜單 (平穩)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: </span><span class="s6">0</span><span class="s2"> } }] },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ id: </span><span class="s6">50</span><span class="s2">, title: </span><span class="s4">"接班選拔"</span><span class="s2">, desc: </span><span class="s4">"選拔最具平衡智慧接班人，不分背景性別。"</span><span class="s2">, link: </span><span class="s4">"永續領導"</span><span class="s2">, options: [{ label: </span><span class="s4">"多元接班 (命最長)"</span><span class="s2">, effect: { p: </span><span class="s6">35</span><span class="s2">, e: </span><span class="s6">25</span><span class="s2"> } }, { label: </span><span class="s4">"嫡系交接 (慣性穩)"</span><span class="s2">, effect: { p: </span><span class="s6">25</span><span class="s2">, e: -</span><span class="s6">15</span><span class="s2"> } }] }</span></p>
-<p class="p1"><span class="s2">];</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p3"><span class="s2">// --- 15 項隨機突發事件 ---</span></p>
-<p class="p5"><span class="s1">const</span><span class="s7"> </span><span class="s2">SUDDEN_EVENTS</span><span class="s7"> = [</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【法規大稽查】"</span><span class="s2">, desc: </span><span class="s4">"政府實施性平檢討。若你的平權價值不足，將面臨停工重罰。"</span><span class="s2">, impact: { p: -</span><span class="s6">35</span><span class="s2">, e: </span><span class="s6">0</span><span class="s2"> } },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【社群媒體盛讚】"</span><span class="s2">, desc: </span><span class="s4">"您的友善政策被廣為分享，引發全國性的訂位爆發。"</span><span class="s2">, impact: { p: </span><span class="s6">45</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【國際金獎認證】"</span><span class="s2">, desc: </span><span class="s4">"餐廳獲頒平權餐飲最高殊榮，全球加盟金大幅翻倍。"</span><span class="s2">, impact: { p: </span><span class="s6">60</span><span class="s2">, e: </span><span class="s6">30</span><span class="s2"> } },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【惡意抹黑危機】"</span><span class="s2">, desc: </span><span class="s4">"競爭對手針對平權理念發動抹黑，需撥預算進行公關戰。"</span><span class="s2">, impact: { p: -</span><span class="s6">25</span><span class="s2">, e: </span><span class="s6">5</span><span class="s2"> } },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【集體離職潮】"</span><span class="s2">, desc: </span><span class="s4">"因忽視基層員工的心聲，引發核心團隊抗議離職。"</span><span class="s2">, impact: { p: -</span><span class="s6">30</span><span class="s2">, e: -</span><span class="s6">20</span><span class="s2"> } },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【ESG 報告優選】"</span><span class="s2">, desc: </span><span class="s4">"被評為年度 ESG 揭露最透明企業，吸引大型金控入股。"</span><span class="s2">, impact: { p: </span><span class="s6">35</span><span class="s2">, e: </span><span class="s6">20</span><span class="s2"> } },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【供應商醜聞】"</span><span class="s2">, desc: </span><span class="s4">"核心供應商被踢爆壓榨勞工，您的品牌連帶遭受抵制。"</span><span class="s2">, impact: { p: -</span><span class="s6">20</span><span class="s2">, e: -</span><span class="s6">25</span><span class="s2"> } },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【數位轉型成功】"</span><span class="s2">, desc: </span><span class="s4">"全新的彈性排班系統研發成功，人力配置成本大幅下降。"</span><span class="s2">, impact: { p: </span><span class="s6">40</span><span class="s2">, e: </span><span class="s6">10</span><span class="s2"> } },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【育兒友善標章】"</span><span class="s2">, desc: </span><span class="s4">"榮獲官方頒發標章，政府補助金與租稅優惠本月入帳。"</span><span class="s2">, impact: { p: </span><span class="s6">25</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【薪資缺口爆料】"</span><span class="s2">, desc: </span><span class="s4">"匿名員工爆料內部薪資依然存在缺口，名譽受損。"</span><span class="s2">, impact: { p: -</span><span class="s6">15</span><span class="s2">, e: -</span><span class="s6">20</span><span class="s2"> } },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【員工心理健康月】"</span><span class="s2">, desc: </span><span class="s4">"諮商計畫成效顯著，全員離職率創下歷史新低。"</span><span class="s2">, impact: { p: </span><span class="s6">20</span><span class="s2">, e: </span><span class="s6">10</span><span class="s2"> } },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【平權大會主辦】"</span><span class="s2">, desc: </span><span class="s4">"主辦業界平權大會，成為領導品牌，溢價能力提升。"</span><span class="s2">, impact: { p: </span><span class="s6">30</span><span class="s2">, e: </span><span class="s6">20</span><span class="s2"> } },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【限定聯名大賣】"</span><span class="s2">, desc: </span><span class="s4">"與人權組織聯名推出的公益餐具被搶購一空，營收新高。"</span><span class="s2">, impact: { p: </span><span class="s6">55</span><span class="s2">, e: </span><span class="s6">15</span><span class="s2"> } },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【隱形天花板抗議】"</span><span class="s2">, desc: </span><span class="s4">"部分員工反應升遷制度黑箱，團隊向心力受到衝擊。"</span><span class="s2">, impact: { p: -</span><span class="s6">10</span><span class="s2">, e: -</span><span class="s6">15</span><span class="s2"> } },</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>{ title: </span><span class="s4">"【國際巨星造訪】"</span><span class="s2">, desc: </span><span class="s4">"知名平權活動家私下造訪並發文推廣，品牌效應驚人。"</span><span class="s2">, impact: { p: </span><span class="s6">40</span><span class="s2">, e: </span><span class="s6">10</span><span class="s2"> } }</span></p>
-<p class="p1"><span class="s2">];</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p3"><span class="s2">// --- 藝術天秤組件 ---</span></p>
-<p class="p1"><span class="s1">const</span><span class="s2"> </span><span class="s3">ArtisticScale</span><span class="s2"> = ({ p, e }) =&gt; {</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> rotation = useMemo(() =&gt; ((p / (p + e)) * </span><span class="s6">2</span><span class="s2"> - </span><span class="s6">1</span><span class="s2">) * </span><span class="s6">25</span><span class="s2">, [p, e]);<span class="Apple-converted-space"> </span></span></p>
-<p class="p6"><span class="s7"><span class="Apple-converted-space">  </span></span><span class="s2">return</span><span class="s7"> (</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span>&lt;div className=</span><span class="s2">"relative w-full flex flex-col items-center py-16"</span><span class="s7">&gt;</span></p>
-<p class="p5"><span class="s7"><span class="Apple-converted-space">      </span>&lt;</span><span class="s2">ScaleDecoration</span><span class="s7"> /&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s2">"relative w-72 h-40 flex flex-col items-center justify-end"</span><span class="s7">&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;div<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>className=</span><span class="s2">"absolute w-full h-[1.5px] bg-gradient-to-r from-amber-500/60 via-[#E2D1C3] to-indigo-500/60 transition-transform duration-1000 ease-in-out"</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>style={{ transform: </span><span class="s4">`rotate(</span><span class="s2">${rotation}</span><span class="s4">deg)`</span><span class="s2">, bottom: </span><span class="s4">'50px'</span><span class="s2"> }}</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>&lt;div className=</span><span class="s2">"absolute -left-10 -top-14 flex flex-col items-center"</span><span class="s7">&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">             </span>&lt;div className=</span><span class="s2">"h-14 w-[0.5px] bg-[#E2D1C3]/20"</span><span class="s7"> /&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">             </span>&lt;</span><span class="s3">SunIcon</span><span class="s2"> glow={p &gt;= e} size={</span><span class="s6">48</span><span class="s2">} /&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>&lt;div className=</span><span class="s2">"absolute -right-10 -top-14 flex flex-col items-center"</span><span class="s7">&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">             </span>&lt;div className=</span><span class="s2">"h-14 w-[0.5px] bg-[#E2D1C3]/20"</span><span class="s7"> /&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">             </span>&lt;</span><span class="s3">MoonIcon</span><span class="s2"> glow={e &gt; p} size={</span><span class="s6">48</span><span class="s2">} /&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>&lt;div className=</span><span class="s2">"absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full border border-white/20 bg-[#0E101A] shadow-xl"</span><span class="s7"> /&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>&lt;div className=</span><span class="s2">"w-[1px] h-28 bg-gradient-to-t from-transparent via-[#E2D1C3]/40 to-[#E2D1C3]/60 mb-[-10px]"</span><span class="s7"> /&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>&lt;div className=</span><span class="s2">"w-12 h-[1px] bg-[#E2D1C3]/30 rounded-full"</span><span class="s7"> /&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s2">"mt-10 flex gap-24 text-[9px] tracking-[0.5em] font-bold uppercase opacity-30 select-none"</span><span class="s7">&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;span className=</span><span class="s4">"text-amber-500"</span><span class="s2">&gt;</span><span class="s3">Capital</span><span class="s2">&lt;/span&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;span className=</span><span class="s4">"text-indigo-400"</span><span class="s2">&gt;</span><span class="s3">Values</span><span class="s2">&lt;/span&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>);</span></p>
-<p class="p1"><span class="s2">};</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p6"><span class="s2">export</span><span class="s7"> </span><span class="s2">default</span><span class="s7"> </span><span class="s2">function</span><span class="s7"> </span><span class="s3">App</span><span class="s7">() {</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [gameState, setGameState] = useState(</span><span class="s4">'start'</span><span class="s2">);<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [p, setP] = useState(</span><span class="s6">50</span><span class="s2">);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [e, setE] = useState(</span><span class="s6">50</span><span class="s2">);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [sessionEvents, setSessionEvents] = useState([]);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [currentIndex, setCurrentIndex] = useState(</span><span class="s6">0</span><span class="s2">);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [currentSudden, setCurrentSudden] = useState(</span><span class="s1">null</span><span class="s2">);</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> startNewGame = () =&gt; {</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> selected = [...</span><span class="s3">ALL_EVENTS</span><span class="s2">].sort(() =&gt; </span><span class="s3">Math</span><span class="s2">.random() - </span><span class="s6">0.5</span><span class="s2">).slice(</span><span class="s6">0</span><span class="s2">, </span><span class="s6">20</span><span class="s2">);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>setSessionEvents(selected);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>setCurrentIndex(</span><span class="s6">0</span><span class="s2">); setP(</span><span class="s6">50</span><span class="s2">); setE(</span><span class="s6">50</span><span class="s2">);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>setGameState(</span><span class="s4">'playing'</span><span class="s2">);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>};</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> handleDecision = (opt) =&gt; {</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> nextP = </span><span class="s3">Math</span><span class="s2">.min(</span><span class="s6">100</span><span class="s2">, </span><span class="s3">Math</span><span class="s2">.max(</span><span class="s6">0</span><span class="s2">, p + opt.effect.p));</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> nextE = </span><span class="s3">Math</span><span class="s2">.min(</span><span class="s6">100</span><span class="s2">, </span><span class="s3">Math</span><span class="s2">.max(</span><span class="s6">0</span><span class="s2">, e + opt.effect.e));</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>setP(nextP); setE(nextE);</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">if</span><span class="s2"> (currentIndex &gt; </span><span class="s6">0</span><span class="s2"> &amp;&amp; </span><span class="s3">Math</span><span class="s2">.random() &lt; </span><span class="s6">0.28</span><span class="s2">) {</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">const</span><span class="s2"> s = </span><span class="s3">SUDDEN_EVENTS</span><span class="s2">[</span><span class="s3">Math</span><span class="s2">.floor(</span><span class="s3">Math</span><span class="s2">.random() * </span><span class="s3">SUDDEN_EVENTS</span><span class="s2">.length)];</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>setCurrentSudden(s);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>setGameState(</span><span class="s4">'sudden'</span><span class="s2">);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>} </span><span class="s1">else</span><span class="s2"> {</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>nextTurn(nextP, nextE);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>};</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> nextTurn = (cP, cE) =&gt; {</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">if</span><span class="s2"> (currentIndex &gt;= sessionEvents.length - </span><span class="s6">1</span><span class="s2"> || cP &lt;= </span><span class="s6">0</span><span class="s2"> || cE &lt;= </span><span class="s6">0</span><span class="s2">) {</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>setGameState(</span><span class="s4">'result'</span><span class="s2">);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>} </span><span class="s1">else</span><span class="s2"> {</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>setCurrentIndex(prev =&gt; prev + </span><span class="s6">1</span><span class="s2">);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>setGameState(</span><span class="s4">'playing'</span><span class="s2">);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>};</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> proceedSudden = () =&gt; {</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> nextP = </span><span class="s3">Math</span><span class="s2">.min(</span><span class="s6">100</span><span class="s2">, </span><span class="s3">Math</span><span class="s2">.max(</span><span class="s6">0</span><span class="s2">, p + (currentSudden.impact.p || </span><span class="s6">0</span><span class="s2">)));</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> nextE = </span><span class="s3">Math</span><span class="s2">.min(</span><span class="s6">100</span><span class="s2">, </span><span class="s3">Math</span><span class="s2">.max(</span><span class="s6">0</span><span class="s2">, e + (currentSudden.impact.e || </span><span class="s6">0</span><span class="s2">)));</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>setP(nextP); setE(nextE);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>setCurrentSudden(</span><span class="s1">null</span><span class="s2">);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>nextTurn(nextP, nextE);</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>};</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> getEvaluation = () =&gt; {</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> diff = </span><span class="s3">Math</span><span class="s2">.abs(p - e);</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span></span><span class="s1">if</span><span class="s7"> (diff &lt;= </span><span class="s6">5</span><span class="s7">) </span><span class="s1">return</span><span class="s7"> { t: </span><span class="s2">"傳奇主理人"</span><span class="s7">, d: </span><span class="s2">"您達成了一種近乎不可能的『藝術級平衡』。獲利不再是冷冰冰的數字，而是伴隨著尊嚴而生的能量。"</span><span class="s7">, c: </span><span class="s2">"text-amber-500"</span><span class="s7"> };</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span></span><span class="s1">if</span><span class="s7"> (diff &lt;= </span><span class="s6">18</span><span class="s7">) </span><span class="s1">return</span><span class="s7"> { t: </span><span class="s2">"卓越經營者"</span><span class="s7">, d: </span><span class="s2">"您在驚濤駭浪的市場中守住了品牌的核心，成功在利潤與價值間維持了優雅的動態軌跡。"</span><span class="s7">, c: </span><span class="s2">"text-[#E2D1C3]"</span><span class="s7"> };</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span></span><span class="s1">return</span><span class="s7"> { t: </span><span class="s2">"失衡的願景"</span><span class="s7">, d: </span><span class="s2">"傾斜的天秤預示了未來。缺乏平權支持的利潤僅是海市蜃樓，請重新審視您的經營本質。"</span><span class="s7">, c: </span><span class="s2">"text-rose-500"</span><span class="s7"> };</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>};</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p6"><span class="s7"><span class="Apple-converted-space">  </span></span><span class="s2">return</span><span class="s7"> (</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span>&lt;div className=</span><span class="s2">"min-h-screen bg-[#0E101A] text-slate-300 font-sans flex flex-col items-center justify-center p-6 select-none overflow-hidden relative"</span><span class="s7">&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s2">"absolute inset-0 pointer-events-none opacity-[0.04]"</span><span class="s7"> style={{ backgroundImage: </span><span class="s2">`url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`</span><span class="s7"> }}&gt;&lt;/div&gt;</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s2">"text-center mb-12 animate-in fade-in duration-1000 z-10"</span><span class="s7">&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>&lt;span className=</span><span class="s2">"text-[10px] tracking-[1em] text-white/30 uppercase font-bold"</span><span class="s7">&gt;</span><span class="s3">Standalone</span><span class="s7"> </span><span class="s3">Experience</span><span class="s7">&lt;/span&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>&lt;h1 className=</span><span class="s2">"text-4xl font-serif italic text-[#E2D1C3] mt-3 tracking-widest shadow-inner"</span><span class="s7">&gt;</span><span class="s3">The</span><span class="s7"> </span><span class="s3">Restaurateur</span><span class="s7">&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s2">"w-full max-w-sm bg-white/[0.02] border border-white/10 rounded-[4rem] overflow-hidden flex flex-col min-h-[660px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] backdrop-blur-2xl relative z-10 transition-all"</span><span class="s7">&gt;</span></p>
-<p class="p2"><span class="s2"><span class="Apple-converted-space">        </span></span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>&lt;div className=</span><span class="s2">"bg-white/[0.01] border-b border-white/5"</span><span class="s7">&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;</span><span class="s3">ArtisticScale</span><span class="s2"> p={p} e={e} /&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>&lt;div className=</span><span class="s2">"flex-grow p-10 flex flex-col relative"</span><span class="s7">&gt;</span></p>
-<p class="p2"><span class="s2"><span class="Apple-converted-space">          </span></span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>{gameState === </span><span class="s4">'start'</span><span class="s2"> &amp;&amp; (</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">            </span>&lt;div className=</span><span class="s2">"flex flex-col items-center justify-center text-center h-full space-y-14 animate-in zoom-in duration-1000"</span><span class="s7">&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">              </span>&lt;p className=</span><span class="s2">"text-[#E2D1C3]/70 italic font-serif leading-relaxed text-2xl px-2"</span><span class="s7">&gt;</span></p>
-<p class="p7"><span class="s7"><span class="Apple-converted-space">                </span></span><span class="s2">「在高效經營的日光下，</span><span class="s7">&lt;br/&gt;</span><span class="s2">守望共融平衡的月輝。」</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;button<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>onClick={startNewGame}</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">                </span>className=</span><span class="s2">"group relative px-12 py-5 rounded-full border border-amber-500/40 hover:border-amber-400 transition-all active:scale-95 shadow-[0_0_30px_rgba(251,191,36,0.1)]"</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">                </span>&lt;span className=</span><span class="s2">"relative font-bold tracking-[0.5em] text-amber-500 uppercase text-xs"</span><span class="s7">&gt;</span><span class="s8">啟動經營模擬</span><span class="s7">&lt;/span&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>)}</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>{gameState === </span><span class="s4">'playing'</span><span class="s2"> &amp;&amp; sessionEvents[currentIndex] &amp;&amp; (</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">            </span>&lt;div className=</span><span class="s2">"flex flex-col h-full animate-in fade-in slide-in-from-right-12 duration-700"</span><span class="s7">&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">              </span>&lt;div className=</span><span class="s2">"flex justify-between items-center mb-8"</span><span class="s7">&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">                </span>&lt;span className=</span><span class="s2">"text-[9px] font-black text-amber-500/80 bg-amber-500/10 px-4 py-1.5 rounded-full border border-amber-500/20 uppercase tracking-widest"</span><span class="s7">&gt;</span><span class="s3">Case</span><span class="s7"> {currentIndex + </span><span class="s6">1</span><span class="s7">} / </span><span class="s6">20</span><span class="s7">&lt;/span&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>&lt;span className=</span><span class="s4">"text-[8px] text-white/30 uppercase tracking-[0.2em] font-bold"</span><span class="s2">&gt;{sessionEvents[currentIndex].link}&lt;/span&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;h3 className=</span><span class="s4">"text-2xl font-serif text-[#E2D1C3] mb-6 leading-tight"</span><span class="s2">&gt;{sessionEvents[currentIndex].title}&lt;/h3&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">              </span>&lt;p className=</span><span class="s2">"text-slate-400 text-base leading-relaxed mb-12 italic border-l-2 border-white/5 pl-6"</span><span class="s7">&gt;{sessionEvents[currentIndex].desc}&lt;/p&gt;</span></p>
-<p class="p2"><span class="s2"><span class="Apple-converted-space">              </span></span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;div className=</span><span class="s4">"mt-auto space-y-5"</span><span class="s2">&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>{sessionEvents[currentIndex].options.map((opt, i) =&gt; (</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                  </span>&lt;button<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                    </span>key={i}</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                    </span>onClick={() =&gt; handleDecision(opt)}</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">                    </span>className=</span><span class="s2">"w-full p-6 text-left rounded-[2rem] border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-amber-500/30 transition-all active:bg-amber-500/5 group relative overflow-hidden"</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                  </span>&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">                    </span>&lt;div className=</span><span class="s2">"flex justify-between items-center relative z-10"</span><span class="s7">&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">                      </span>&lt;span className=</span><span class="s2">"text-xs font-bold tracking-widest text-slate-200 uppercase group-hover:text-amber-400 transition-colors"</span><span class="s7">&gt;{opt.label}&lt;/span&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">                      </span>&lt;div className=</span><span class="s2">"w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-amber-500 shadow-[0_0_10px_#fbbf24] transition-all"</span><span class="s7"> /&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                  </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>))}</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>)}</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>{gameState === </span><span class="s4">'sudden'</span><span class="s2"> &amp;&amp; (</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">            </span>&lt;div className=</span><span class="s2">"flex flex-col items-center justify-center h-full text-center animate-in zoom-in-95 duration-500"</span><span class="s7">&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">              </span>&lt;div className=</span><span class="s2">"w-16 h-16 rounded-full border border-rose-500/40 flex items-center justify-center mb-10 text-rose-500"</span><span class="s7">&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>&lt;span className=</span><span class="s4">"text-3xl font-serif"</span><span class="s2">&gt;!&lt;/span&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">              </span>&lt;h3 className=</span><span class="s2">"text-rose-500 font-bold tracking-[0.5em] text-xs mb-5 uppercase"</span><span class="s7">&gt;{currentSudden.title}&lt;/h3&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">              </span>&lt;p className=</span><span class="s2">"text-slate-300 text-base mb-14 italic leading-relaxed px-4"</span><span class="s7">&gt;{currentSudden.desc}&lt;/p&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;button<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>onClick={proceedSudden}</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">                </span>className=</span><span class="s2">"w-full py-5 bg-rose-500/10 border border-rose-500/30 rounded-full text-rose-500 text-[11px] font-bold tracking-[0.4em] uppercase shadow-[0_0_20px_rgba(244,63,94,0.1)] hover:bg-rose-500/20"</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span></span><span class="s8">面對挑戰</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>)}</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>{gameState === </span><span class="s4">'result'</span><span class="s2"> &amp;&amp; (</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">            </span>&lt;div className=</span><span class="s2">"flex flex-col items-center justify-center h-full text-center py-4 animate-in fade-in slide-in-from-bottom-12 duration-1000"</span><span class="s7">&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">              </span>&lt;span className=</span><span class="s2">"text-[10px] tracking-[0.8em] text-white/20 uppercase font-bold mb-8"</span><span class="s7">&gt;</span><span class="s3">Strategic</span><span class="s7"> </span><span class="s3">Analysis</span><span class="s7">&lt;/span&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;h2 className={</span><span class="s4">`text-4xl font-serif italic mb-10 </span><span class="s2">${getEvaluation().c}</span><span class="s4">`</span><span class="s2">}&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>{getEvaluation().t}</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;/h2&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">              </span>&lt;div className=</span><span class="s2">"bg-white/[0.02] p-10 rounded-[3rem] border border-white/5 mb-14 w-full italic text-sm text-slate-400 leading-relaxed shadow-inner"</span><span class="s7">&gt;</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">                </span></span><span class="s2">"{getEvaluation().d}"</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;button<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>onClick={() =&gt; setGameState(</span><span class="s4">'start'</span><span class="s2">)}</span></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">                </span>className=</span><span class="s2">"text-[11px] font-bold text-white/30 uppercase tracking-[0.5em] hover:text-[#E2D1C3] transition-colors"</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span></span><span class="s3">Start</span><span class="s2"> </span><span class="s3">New</span><span class="s2"> </span><span class="s3">Cycle</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>)}</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s5"></span><br></p>
-<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s2">"mt-16 opacity-20 text-[9px] tracking-[1em] uppercase text-white font-bold text-center"</span><span class="s7">&gt;</span></p>
-<p class="p5"><span class="s7"><span class="Apple-converted-space">        </span></span><span class="s2">Integrity</span><span class="s7"> </span><span class="s8">•</span><span class="s7"> </span><span class="s2">Leadership</span><span class="s7"> </span><span class="s8">•</span><span class="s7"> </span><span class="s2">Vision</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>);</span></p>
-<p class="p1"><span class="s2">}</span></p>
+
+<div class="noise-bg"></div>
+
+<div class="app-container">
+    
+    <!-- 1. START SCREEN -->
+    <div id="screen-start" class="screen active justify-center items-center text-center">
+        <div class="mb-8 opacity-20">
+            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2v20M2 12h20" />
+            </svg>
+        </div>
+        <h2 class="text-[9px] tracking-[0.8em] text-white/30 uppercase font-bold mb-4">Elite Strategy</h2>
+        <h1 class="text-4xl font-cursive italic text-[#E2D1C3] mb-12 tracking-widest">The Restaurateur</h1>
+        <p class="font-serif italic text-lg text-[#E2D1C3]/60 leading-relaxed mb-16 px-4">
+            「利潤是能量的日光，<br>平權是和諧的月輝。」
+        </p>
+        <button onclick="initGame()" class="btn-gold w-full">啟動經營模擬</button>
+    </div>
+
+    <!-- 2. GAME SCREEN -->
+    <div id="screen-game" class="screen">
+        <div class="w-full flex flex-col items-center justify-center border-b border-white/5 mb-6 pb-4">
+            <svg width="280" height="140" viewBox="0 0 300 150">
+                <circle cx="150" cy="75" r="60" stroke="#E2D1C3" fill="none" stroke-width="0.2" stroke-dasharray="2 4" opacity="0.2" />
+                <g id="beam" transform="translate(150, 80)">
+                    <line x1="-80" y1="0" x2="80" y2="0" stroke="url(#goldGrad)" stroke-width="2" />
+                    <g transform="translate(-80, 0)">
+                        <line x1="0" y1="0" x2="0" y2="20" stroke="#E2D1C3" stroke-width="0.5" opacity="0.3" />
+                        <g id="sun-container" class="viz-glow" transform="translate(0, 30)">
+                            <circle cx="0" cy="0" r="10" fill="var(--sun-gold)" class="sun-glow" />
+                            <circle cx="0" cy="0" r="13" stroke="var(--sun-gold)" stroke-width="0.3" stroke-dasharray="2 2" />
+                        </g>
+                    </g>
+                    <g transform="translate(80, 0)">
+                        <line x1="0" y1="0" x2="0" y2="20" stroke="#E2D1C3" stroke-width="0.5" opacity="0.3" />
+                        <g id="moon-container" class="viz-glow" transform="translate(0, 30)">
+                            <path d="M8 5A8 8 0 1 1 -5 -8A6 6 0 1 0 8 5z" fill="var(--moon-blue)" class="moon-glow" />
+                        </g>
+                    </g>
+                    <circle cx="0" cy="0" r="4" fill="#0e101a" stroke="#E2D1C3" stroke-width="1.5" />
+                </g>
+                <line x1="150" y1="80" x2="150" y2="135" stroke="#E2D1C3" stroke-width="0.4" opacity="0.3" />
+                <defs>
+                    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="var(--sun-gold)" />
+                        <stop offset="50%" stop-color="#E2D1C3" />
+                        <stop offset="100%" stop-color="var(--moon-blue)" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            <div class="flex gap-20 text-[7px] tracking-[0.4em] font-bold text-white/20 uppercase mt-2">
+                <span>Profit</span><span>Equity</span>
+            </div>
+        </div>
+
+        <div class="flex-grow flex flex-col custom-scroll overflow-y-auto pr-1">
+            <div class="flex justify-between items-center mb-6">
+                <span id="ui-round" class="text-[9px] font-black text-amber-500 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20 uppercase">CASE 1 / 20</span>
+                <span id="ui-link" class="text-[8px] text-white/30 tracking-widest font-bold uppercase">CEDAW INSIGHT</span>
+            </div>
+            <h3 id="ui-title" class="text-xl font-serif text-[#E2D1C3] mb-4 leading-tight"></h3>
+            <p id="ui-desc" class="text-slate-400 text-sm italic border-l-2 border-white/10 pl-6 mb-10 leading-relaxed"></p>
+            
+            <div id="ui-options" class="mt-auto"></div>
+        </div>
+    </div>
+
+    <!-- 3. SUDDEN EVENT SCREEN -->
+    <div id="screen-sudden" class="screen justify-center items-center text-center">
+        <div class="w-16 h-16 rounded-full border border-rose-500/30 flex items-center justify-center mb-8 text-rose-500">
+            <span class="text-3xl font-serif">!</span>
+        </div>
+        <h3 id="ui-sudden-title" class="text-rose-500 font-bold tracking-[0.5em] text-[10px] mb-6 uppercase">命運的震盪</h3>
+        <p id="ui-sudden-desc" class="text-slate-200 text-lg mb-14 italic leading-relaxed px-4"></p>
+        <button id="btn-sudden-close" class="btn-gold w-full !text-rose-500 !border-rose-500/30">面對變局</button>
+    </div>
+
+    <!-- 4. RESULT SCREEN -->
+    <div id="screen-result" class="screen justify-center items-center text-center">
+        <span class="text-[10px] tracking-[0.8em] text-white/20 uppercase font-bold mb-8">Strategic Analysis</span>
+        <h2 id="ui-result-title" class="text-3xl font-serif italic mb-8"></h2>
+        <div class="bg-white/[0.03] p-10 rounded-[3rem] border border-white/10 mb-14 w-full italic text-sm text-slate-400 leading-relaxed shadow-inner">
+            <p id="ui-result-desc"></p>
+        </div>
+        <button onclick="location.reload()" class="text-[10px] font-bold text-white/30 uppercase tracking-[0.4em] hover:text-[#E2D1C3] transition-colors">再次啟動</button>
+    </div>
+
+</div>
+
+<footer class="fixed bottom-6 text-[8px] tracking-[1em] text-white/10 uppercase font-bold text-center z-0">
+    Integrity • Leadership • Vision
+</footer>
+
+<script>
+    // --- 完整實裝 50 題庫 ---
+    const eventLibrary = [
+        { title: "自動化重物搬運", desc: "引進輔助搬運設備，打破性別體能偏見。", link: "CEDAW 第 5 條", options: [{ label: "投資輔助設備 (效能提升)", p: 25, e: 15 }, { label: "維持傳統人力 (省成本)", p: 10, e: -15 }] },
+        { title: "懷孕主管復職", desc: "主動為產後主管提供技能更新與彈性回歸計畫。", link: "CEDAW 第 11 條", options: [{ label: "啟動留任計畫 (技術保障)", p: 20, e: 20 }, { label: "視同新人辦理 (省成本)", p: 10, e: -25 }] },
+        { title: "情緒勞動津貼", desc: "外場服務具高度專業，給予對等薪資與支持。", link: "CEDAW 第 11 條", options: [{ label: "專業化敘薪制度 (品質升)", p: 30, e: 15 }, { label: "嚴格控制工資 (控預算)", p: 15, e: -12 }] },
+        { title: "騷擾防治零容忍", desc: "即使是大客戶，發生騷擾行為也絕不姑息。", link: "職場安全", options: [{ label: "嚴正拒絕客並保護同仁", p: 10, e: 35 }, { label: "息事寧人以保短利", p: 50, e: -35 }] },
+        { title: "移工晉升制度", desc: "提供跨國人才晉升領導階層的培訓機會。", link: "CEDAW 第 11 條", options: [{ label: "培訓升遷跨國客源", p: 40, e: 20 }, { label: "維持基層技術分工", p: 10, e: -15 }] },
+        { title: "全薪生理假", desc: "提供優於法規全薪生理假，吸引頂尖人才。", link: "CEDAW 第 4 條", options: [{ label: "友善給假降低流失", p: 18, e: 15 }, { label: "執行扣薪警示", p: 15, e: -25 }] },
+        { title: "性別中立制服", desc: "打造無性別美學制服，塑造國際精品形象。", link: "CEDAW 第 5 條", options: [{ label: "形象翻新吸引精品客", p: 35, e: 15 }, { label: "沿用傳統剪裁規範", p: 5, e: -10 }] },
+        { title: "高齡二度就業", desc: "聘僱資深女性主廚，其秘方成為熱銷冠軍。", link: "消除歧視", options: [{ label: "錄取研發核心技術", p: 60, e: 20 }, { label: "年輕化優先考量", p: 15, e: -10 }] },
+        { title: "奢華哺乳空間", desc: "改裝頂級哺乳室，吸引高消費親子客。", link: "CEDAW 第 11 條", options: [{ label: "改裝專屬質感空間", p: 40, e: 25 }, { label: "維持席次確保翻桌", p: 20, e: -20 }] },
+        { title: "職場尊重講習", desc: "全員強制參與平權講習，建立高端職場。", link: "職場文化", options: [{ label: "執行深度文化治理", p: 20, e: 15 }, { label: "視為形式化流程", p: 5, e: -25 }] },
+        { title: "夜班安全接駁", desc: "提供偏遠員工下班交通補助，穩定產能。", link: "職場安全", options: [{ label: "提供接駁 (穩定夜班)", p: 28, e: 15 }, { label: "員工自理 (節預算)", p: 10, e: -10 }] },
+        { title: "同性伴侶福利", desc: "福利全面與法定配偶看齊，吸引多元人才。", link: "CEDAW 第 1 條", options: [{ label: "全面納入福利 (聲望升)", p: 25, e: 25 }, { label: "僅限法定 (省保費)", p: 5, e: -20 }] },
+        { title: "薪資透明校正", desc: "主動分析薪資結構，補齊性別缺口。", link: "CEDAW 第 11 條", options: [{ label: "一次補齊 (忠誠度升)", p: 15, e: 30 }, { label: "逐年調整 (保現流)", p: 35, e: -15 }] },
+        { title: "身障無障礙廚房", desc: "改造廚房設備以聘僱具天賦的身障廚師。", link: "CEDAW 第 4 條", options: [{ label: "智慧化改造 (良率升)", p: 35, e: 20 }, { label: "維持現況 (省投資)", p: 15, e: -15 }] },
+        { title: "穆斯林友善營運", desc: "認證清真廚房並支持佩戴特製頭巾。", link: "文化平權", options: [{ label: "認證加開 (外源大漲)", p: 55, e: 20 }, { label: "維持原樣 (管理易)", p: 15, e: -10 }] },
+        { title: "去性別化廣告", desc: "主打「專業不分性別」吸引新世代客群。", link: "CEDAW 第 5 條", options: [{ label: "重塑專業溢價品牌", p: 30, e: 20 }, { label: "傳統美型吸引模式", p: 20, e: -12 }] },
+        { title: "單親家長彈性班", desc: "針對單親同仁提供特殊排班，穩定核心人力。", link: "友善家庭", options: [{ label: "支持彈性 (降低流失)", p: 25, e: 20 }, { label: "一視同仁排班", p: 15, e: -10 }] },
+        { title: "企業生育基金", desc: "優於法律之生育補助，吸引適育團隊。", link: "CEDAW 第 11 條", options: [{ label: "加碼津貼 (幸福標竿)", p: 20, e: 25 }, { label: "維持法律最低限", p: 25, e: -20 }] },
+        { title: "打破職務刻板", desc: "鼓勵女掌火、男擺盤，發揮非傳統優勢。", link: "消除偏見", options: [{ label: "混合培訓 (全戰力升)", p: 30, e: 18 }, { label: "依習慣分配 (求穩)", p: 20, e: -10 }] },
+        { title: "全齡成長路徑", desc: "為不同年齡層員工設計客製福利與目標。", link: "人才永續", options: [{ label: "多元路徑 (最穩團隊)", p: 32, e: 20 }, { label: "汰弱留強 (省成本)", p: 40, e: -25 }] },
+        { title: "女廚控火特訓", desc: "專為女廚師設計體能與控火特訓，戰力倍增。", link: "CEDAW 第 10 條", options: [{ label: "開啟特訓 (效能飆升)", p: 45, e: 20 }, { label: "混合訓練 (省場租)", p: 15, e: -5 }] },
+        { title: "深夜特約車隊", desc: "簽約專屬安心車隊，保障員工通勤絕對安全。", link: "職場安全", options: [{ label: "專屬接送 (排班韌性)", p: 30, e: 15 }, { label: "自行叫車 (省合約)", p: 10, e: -12 }] },
+        { title: "平權願景宣言", desc: "宣布餐廳未來願景以平權為第一指標。", link: "永續經營", options: [{ label: "發布宣言 (獲高端投資)", p: 50, e: 35 }, { label: "保持低調經營", p: 30, e: -15 }] },
+        { title: "專業薪資稽核", desc: "聘請四大會計師進行薪資公平性稽核。", link: "CEDAW 第 11 條", options: [{ label: "透明稽核 (融資優位)", p: 40, e: 25 }, { label: "自行估算 (省費用)", p: 15, e: -8 }] },
+        { title: "混合彈性工時", desc: "後勤人員全面實施彈性上下班提高產能。", link: "現代管理", options: [{ label: "彈性管理 (效能提升)", p: 35, e: 15 }, { label: "全員現場點名", p: 20, e: -15 }] },
+        { title: "停業培力工作坊", desc: "淡季停業一天進行全員深度平權培力。", link: "教育推廣", options: [{ label: "停業訓練 (凝聚力爆發)", p: 25, e: 30 }, { label: "發放手冊閱讀", p: 12, e: -8 }] },
+        { title: "限定平衡晚宴", desc: "開發「天秤之衡」套餐，資助平權活動。", link: "品牌形象", options: [{ label: "盛大販售 (營業額創高)", p: 80, e: 25 }, { label: "常規菜單經營", p: 30, e: 0 }] },
+        { title: "多元接班選拔", desc: "選拔最具平衡智慧接班人，不分背景性別。", link: "永續領導", options: [{ label: "多元接班 (品牌命長)", p: 40, e: 30 }, { label: "嫡系交接", p: 30, e: -20 }] },
+        { title: "語言津貼加碼", desc: "針對能使用多國語言之員工發放特殊補貼。", link: "包容價值", options: [{ label: "實施津貼 (客源倍增)", p: 45, e: 18 }, { label: "維持固定敘薪", p: 15, e: -5 }] },
+        { title: "品牌人權報告", desc: "發布年度人權報告書，獲得國際資本關注。", link: "永續發展", options: [{ label: "發布報告 (獲高額注資)", p: 65, e: 25 }, { label: "保密經營現狀", p: 20, e: -10 }] },
+        { title: "月經貧窮支持", desc: "於洗手間提供高質感生理用品，獲得好評。", link: "實質平等", options: [{ label: "免費供應 (口碑轉業績)", p: 30, e: 20 }, { label: "販賣機供應", p: 10, e: -5 }] },
+        { title: "男主管產假倡議", desc: "主動鼓勵男主管休滿產假，翻轉加班文化。", link: "打破刻板", options: [{ label: "領導帶頭示範 (形象佳)", p: 20, e: 30 }, { label: "不干涉個人私事", p: 15, e: -12 }] },
+        { title: "職務分工牆", desc: "洗碗部門全為女性，升遷與獎金管道封閉。", link: "CEDAW 第 11 條", options: [{ label: "跨部門輪調訓練", p: 25, e: 20 }, { label: "維持專才領域", p: 15, e: -15 }] },
+        { title: "尾牙表演性質", desc: "表演內容包含限制級，部分員工感到不適。", link: "職場文化", options: [{ label: "改為全齡藝術競賽", p: 18, e: 20 }, { label: "維持傳統氣氛", p: 5, e: -25 }] },
+        { title: "外場化妝規定", desc: "要求女性員工必須完整帶妝上班。", link: "CEDAW 第 5 條", options: [{ label: "廢除強制令", p: 15, e: 18 }, { label: "維持專業標準", p: 10, e: -15 }] },
+        { title: "去標籤化招募", desc: "採用盲選技術，隱藏性別與姓名。", link: "消除偏見", options: [{ label: "實施盲選 (創新爆發)", p: 35, e: 20 }, { label: "傳統履歷審核", p: 12, e: -10 }] },
+        { title: "跨性別友善廁所", desc: "改裝計畫，吸引重視理念的高消費群。", link: "空間平等", options: [{ label: "質感改造 (客流量升)", p: 28, e: 22 }, { label: "維持二分現狀", p: 15, e: -8 }] },
+        { title: "供應商平權條款", desc: "優先採購重視 ESG 與平權的供應商。", link: "社會責任", options: [{ label: "嚴選鏈結 (獲精品單)", p: 35, e: 30 }, { label: "唯利是圖採購", p: 55, e: -30 }] },
+        { title: "單親優先排班", desc: "針對單親同仁提供固定早班或彈性方案。", link: "友善家庭", options: [{ label: "支持彈性方案", p: 20, e: 20 }, { label: "公平抽籤輪班", p: 15, e: -8 }] },
+        { title: "聽障實習生", desc: "學校推薦優秀生，需購置閃光導引燈。", link: "CEDAW 第 4 條", options: [{ label: "購置設備全體培訓", p: 30, e: 25 }, { label: "以安全理由婉拒", p: 10, e: -15 }] },
+        { title: "移工玻璃天花板", desc: "跨國移工因語言障礙無法晉升培訓。", link: "CEDAW 第 11 條", options: [{ label: "提供培訓並拔擢", p: 40, e: 25 }, { label: "維持現有職務分工", p: 15, e: -12 }] },
+        { title: "生理假優化", desc: "提供優於法規全薪假，營造友善環境。", link: "CEDAW 第 4 條", options: [{ label: "建立友善給假機制", p: 25, e: 20 }, { label: "考核扣分警示", p: 18, e: -20 }] },
+        { title: "技能證照補貼", desc: "全額補貼考取平權或專業技術證照。", link: "CEDAW 第 10 條", options: [{ label: "證照獎勵品牌升", p: 35, e: 22 }, { label: "自行負擔培訓", p: 15, e: -8 }] },
+        { title: "職場教練計畫", desc: "為女性新人配置教練，縮短摸索成本。", link: "培力計畫", options: [{ label: "發放教練津貼", p: 28, e: 20 }, { label: "讓其自然磨合", p: 12, e: -5 }] },
+        { title: "多元文化週", desc: "舉辦員工母國文化分享，提升凝聚力。", link: "族群包容", options: [{ label: "支持活動開展", p: 22, e: 25 }, { label: "工作優先處理", p: 15, e: -10 }] },
+        { title: "新進員工導師", desc: "每位新人指派職場導師，大幅降低流失。", link: "教育培訓", options: [{ label: "執行導師制", p: 35, e: 20 }, { label: "傳統師徒模式", p: 15, e: -10 }] },
+        { title: "跨性別制服選用", desc: "允許員工依認同選擇制服剪裁。", link: "CEDAW 第 5 條", options: [{ label: "開放自主選擇", p: 25, e: 25 }, { label: "依生理性別規定", p: 10, e: -20 }] },
+        { title: "招募姓名去標籤", desc: "面試階段隱藏姓名性別，錄取高手。", link: "消除偏見", options: [{ label: "實施去標籤技術", p: 45, e: 20 }, { label: "維持傳統履歷", p: 20, e: -10 }] },
+        { title: "產後回歸專案", desc: "產後適應期減工時不減福利，留住核心。", link: "CEDAW 第 11 條", options: [{ label: "支持漸進回歸", p: 30, e: 25 }, { label: "全力投入否則離職", p: 25, e: -35 }] },
+        { title: "年度榮譽主廚", desc: "邀請平權女性專家擔任合作主廚。", link: "價值傳播", options: [{ label: "支付高額顧問費", p: 55, e: 35 }, { label: "邀請名媛客串", p: 30, e: -15 }] }
+    ];
+
+    const suddenLibrary = [
+        { title: "【法規大稽查】", desc: "政府突擊檢查性平條款。若數值不足將面臨停業處分。", p: -50, e: 0 },
+        { title: "【社群媒體盛讚】", desc: "友善政策被廣為流傳，引發全國性訂位爆發。", p: 60, e: 20 },
+        { title: "【國際金獎認證】", desc: "榮獲國際平權標章，全球加盟金大幅提升。", p: 80, e: 35 },
+        { title: "【人才離職潮】", desc: "因忽視員工心聲引發抗議，核心團隊離職。", p: -40, e: -30 },
+        { title: "【ESG 報告優選】", desc: "被評為年度 ESG 透明企業，大型金控集團入股。", p: 50, e: 25 },
+        { title: "【供應商醜聞】", desc: "合作夥伴爆發性騷擾爭議，您的品牌連帶受責。", p: -30, e: -35 },
+        { title: "【數位轉型成功】", desc: "平權導向排班系統研發成功，人力配置成本大降。", p: 55, e: 10 },
+        { title: "【育兒友善標章】", desc: "獲頒官方標章，本月補助金與租稅優惠到帳。", p: 35, e: 20 },
+        { title: "【薪資缺口爆料】", desc: "匿名員工爆料內部薪資制度不公，名譽受損。", p: -25, e: -30 },
+        { title: "【國際巨星造訪】", desc: "知名平權活動家發文推廣，品牌效應驚人。", p: 60, e: 15 },
+        { title: "【多元文化節獎】", desc: "因推廣多元包容獲得城市文化貢獻獎，獲利溢價。", p: 40, e: 25 },
+        { title: "【法律諮詢週】", desc: "內部法律扶助計畫提升了弱勢員工的保障感。", p: 15, e: 15 },
+        { title: "【品牌聯名大賣】", desc: "與人權組織推出的聯名公益晚宴門票被搶購一空。", p: 70, e: 20 },
+        { title: "【培訓紅利】", desc: "早先的女性領導力培訓開始產生成效，效率提升。", p: 30, e: 10 },
+        { title: "【惡意抹黑戰】", desc: "競爭對手抹黑您的平權政策，需要緊急預算應對。", p: -20, e: 5 }
+    ];
+
+    // --- 遊戲邏輯控制 ---
+    let state = { p: 50, e: 50, round: 0, queue: [], pendingSudden: null };
+
+    function initGame() {
+        state.queue = [...eventLibrary].sort(() => Math.random() - 0.5).slice(0, 20);
+        state.round = 0; state.p = 50; state.e = 50;
+        switchScreen('screen-game');
+        renderUI();
+    }
+
+    function renderUI() {
+        const current = state.queue[state.round];
+        if (!current) return;
+        document.getElementById('ui-round').innerText = `CASE ${state.round + 1} / 20`;
+        document.getElementById('ui-link').innerText = current.link;
+        document.getElementById('ui-title').innerText = current.title;
+        document.getElementById('ui-desc').innerText = current.desc;
+        const optionsBox = document.getElementById('ui-options');
+        optionsBox.innerHTML = '';
+        current.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-option';
+            btn.innerHTML = `<span class="text-[11px] font-bold tracking-[0.2em] text-slate-200 uppercase">${opt.label}</span>`;
+            btn.onclick = (ev) => {
+                ev.preventDefault();
+                handleChoice(opt);
+            };
+            optionsBox.appendChild(btn);
+        });
+        updateScale();
+    }
+
+    function updateScale() {
+        const ratio = (state.p / (state.p + state.e)) * 2 - 1;
+        const deg = ratio * 28;
+        document.getElementById('beam').style.transform = `translate(150px, 80px) rotate(${deg}deg)`;
+        document.getElementById('sun-container').style.transform = `translate(0, 30px) scale(${0.85 + state.p/100})`;
+        document.getElementById('moon-container').style.transform = `translate(0, 30px) scale(${0.85 + state.e/100})`;
+        document.getElementById('sun-container').style.filter = state.p > 60 ? 'drop-shadow(0 0 20px var(--sun-gold))' : 'none';
+        document.getElementById('moon-container').style.filter = state.e > 60 ? 'drop-shadow(0 0 20px var(--moon-blue))' : 'none';
+    }
+
+    function handleChoice(opt) {
+        state.p = Math.min(100, Math.max(0, state.p + opt.p));
+        state.e = Math.min(100, Math.max(0, state.e + opt.e));
+        if (state.round > 0 && Math.random() < 0.28) {
+            triggerSudden();
+        } else {
+            advance();
+        }
+    }
+
+    function triggerSudden() {
+        const s = suddenLibrary[Math.floor(Math.random() * suddenLibrary.length)];
+        document.getElementById('ui-sudden-desc').innerText = s.desc;
+        document.getElementById('ui-sudden-title').innerText = s.title;
+        state.pendingSudden = s;
+        switchScreen('screen-sudden');
+    }
+
+    document.getElementById('btn-sudden-close').onclick = () => {
+        const s = state.pendingSudden;
+        state.p = Math.min(100, Math.max(0, state.p + s.p));
+        state.e = Math.min(100, Math.max(0, state.e + s.e));
+        advance();
+    };
+
+    function advance() {
+        if (state.round >= 19 || state.p <= 0 || state.e <= 0) {
+            finishGame();
+        } else {
+            state.round++;
+            switchScreen('screen-game');
+            renderUI();
+        }
+    }
+
+    function finishGame() {
+        const diff = Math.abs(state.p - state.e);
+        let t, d, c;
+        if (diff <= 8) {
+            t = "傳奇主理人";
+            d = "您完美詮釋了『極致的平權即是極致的商機』。在您的領導下，利潤與尊嚴共同綻放，品牌已成為業界的永恆標竿。";
+            c = "var(--sun-gold)";
+        } else if (diff <= 20) {
+            t = "卓越經營者";
+            d = "您成功維持了動態的平衡。品牌具備強大的生命力與正義感，是極具價值的企業模範。";
+            c = "var(--champagne-gold)";
+        } else {
+            t = "失衡的願景";
+            d = "天秤已嚴重傾斜。缺乏平權支撐的利潤如海市蜃樓，或過度理想的支出使營運陷入困局。請重新審視經營的核心本質。";
+            c = "var(--rose-accent)";
+        }
+        document.getElementById('ui-result-title').innerText = t;
+        document.getElementById('ui-result-title').style.color = c;
+        document.getElementById('ui-result-desc').innerText = d;
+        switchScreen('screen-result');
+    }
+
+    function switchScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+</script>
 </body>
 </html>
